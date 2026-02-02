@@ -1,0 +1,40 @@
+{
+  "name": "cse341-auto_shop_booking_system",
+  "version": "1.0.0",
+  "description": "CSE 341 - Team Project: Auto Shop Booking System",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "swagger": "node ./swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murilolhernandes/cse341-auto_shop_booking_system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/murilolhernandes/cse341-auto_shop_booking_system/issues"
+  },
+  "homepage": "https://github.com/murilolhernandes/cse341-auto_shop_booking_system#readme",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.5",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "swagger-autogen": "^2.23.7"
+  }
+}

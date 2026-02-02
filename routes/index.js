@@ -19,4 +19,6 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
+router.use("/clients", require("./client"));
+
 module.exports = router;

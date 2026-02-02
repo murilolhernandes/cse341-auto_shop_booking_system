@@ -36,30 +36,29 @@ app
   .use('/', require('./routes/'));
 
 // Setup the passport authentication using Google OAuth2.0
-// Remove this line when authentication is setup and working, and uncomment the lines below.
-// passport.use(new GoogleStrategy({
-//   clientID: process.env.GOOGLE_CLIENT_ID,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//   callbackURL: process.env.CALLBACK_URL
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     return done(null, profile);
-//   }
-// ));
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }
+));
 
-// passport.serializeUser((user, done) => {
-//   done(null, user);
-// });
-// passport.deserializeUser((user, done) => {
-//   done(null, user);
-// });
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
-// app.get('/google/callback', passport.authenticate('google', {
-//   failureRedirect: '/api-docs', session: false}),
-//   (req, res) => {
-//     req.session.user = req.user;
-//     res.redirect('/');
-//   });
+app.get('/google/callback', passport.authenticate('google', {
+  failureRedirect: '/api-docs', session: false}),
+  (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/');
+  });
 
 // Once we have the DB working, simply remove this line and uncomment the function bellow.
 // mongodb.initDb((err) => {

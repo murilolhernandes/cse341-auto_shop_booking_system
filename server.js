@@ -60,16 +60,11 @@ app.get('/google/callback', passport.authenticate('google', {
     res.redirect('/');
   });
 
-// Once we have the DB working, simply remove this line and uncomment the function bellow.
-// mongodb.initDb((err) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     app.listen(port);
-//     console.log(`Connected to DB and listening on ${port}`);
-//   }
-// });
-
-// Once the DB is working, remove this line and the next two. They were meant to be used while the DB was not setup.
-app.listen(port);
-console.log(`Listening on ${port}`);
+mongodb.initDb((err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(port);
+    console.log(`Connected to DB and listening on ${port}`);
+  }
+});

@@ -55,16 +55,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "jacob"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "brown"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "jacob@email.com"
                 },
                 "phone": {
-                  "example": "any"
+                  "example": "0756456352"
+                },
+                "dob": {
+                  "example": "1990/02/05"
                 }
               }
             }
@@ -122,16 +125,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "peter"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "hamming"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "peter@email.com"
                 },
                 "phone": {
-                  "example": "any"
+                  "example": "0345243857"
+                },
+                "dob": {
+                  "example": "1998/07/02"
                 }
               }
             }

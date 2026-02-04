@@ -1,0 +1,38 @@
+
+[
+    {
+        "firstName": "Cody",
+        "lastName": "Smith",
+        "dob": "01/21/1994",
+        "email": "videogameagent@test.com",
+        "phone": "775-778-0808"
+    },
+    {
+        "firstName": "Murilo",
+        "lastName": "Hernandes",
+        "dob": "08/24/1999",
+        "email": "ilovethecolorblue@test.com",
+        "phone": "634-212-6950"
+    },
+    {
+        "firstName": "Seth",
+        "lastName": "Harrington",
+        "dob": "05/12/1997",
+        "email": "shdynbrtdgrt@test.com",
+        "phone": "788-012-0919"
+    },
+    {
+        "firstName": "Simphiwe",
+        "lastName": "Nkabinde",
+        "dob": "12/03/1995",
+        "email": "iamsimphiwenkabinde@test.com",
+        "phone": "259-390-7113"
+    },
+    {
+        "firstName": "Samuel",
+        "lastName": "Exposito",
+        "dob": "07/31/2000",
+        "email": "dittolast@test.com",
+        "phone": "933-725-8144"
+    }
+]

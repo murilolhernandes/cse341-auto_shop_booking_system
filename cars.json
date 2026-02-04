@@ -1,6 +1,9 @@
 
 [
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a65"
+            },
         "make": "Land Rover",
         "model": "Highlander",
         "year": "2023",
@@ -11,6 +14,9 @@
         "clientId": {"$oid": "69839a8d2c2aa925aa337a76"}
     },
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a66"
+            },
         "make": "Ford",
         "model": "Explorer",
         "year": "2022",
@@ -21,6 +27,9 @@
         "clientId": {"$oid": "69839a8d2c2aa925aa337a79"}
     },
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a67"
+            },
         "make": "GMC",
         "model": "Sierra",
         "year": "1985",
@@ -31,6 +40,9 @@
         "clientId": {"$oid": "69839a8d2c2aa925aa337a79"}
     },
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a68"
+            },
         "make": "Subaru",
         "model": "Outback",
         "year": "2008",
@@ -41,6 +53,9 @@
         "clientId": {"$oid": "69839a8d2c2aa925aa337a77"}
     },
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a69"
+            },
         "make": "Nissan",
         "model": "Altima",
         "year": "2020",
@@ -51,6 +66,9 @@
         "clientId": {"$oid": "69839a8d2c2aa925aa337a78"}
     },
     {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a6a"
+            },
         "make": "Chevrolet",
         "model": "Cruise",
         "year": "2018",

@@ -39,16 +39,14 @@ async function findOne(req, res) {
 }
 
 async function create(req, res) {
-  const { firstName, lastName, email, phone } = req.body;
+  const { firstName, lastName, email, phone, dob } = req.body;
 
-  const now = new Date();
   const data = {
     firstName,
     lastName,
     email,
     phone,
-    createdAt: now,
-    updatedAt: now,
+    dob
   };
 
   const collection = await getDbCollection();
@@ -69,11 +67,10 @@ async function update(req, res) {
   const id = new ObjectId(req.params.id);
   const collection = await getDbCollection();
 
-  const { firstName, lastName, email, phone } = req.body;
+  const { firstName, lastName, email, phone, dob } = req.body;
 
-  const now = new Date();
   const updateFilter = {
-    $set: { ...req.body, updatedAt: now },
+    $set: req.body,
   };
   try {
     const result = await collection.updateOne({ _id: id }, updateFilter);

@@ -1,5 +1,6 @@
 const { body } = require("express-validator");
 const validate = require("../utilities/validate");
+const validateIdParam = require("../utilities/validateIdParam");
 
 const createValidationRules = [
   body("firstName")
@@ -22,6 +23,11 @@ const createValidationRules = [
     .withMessage("must be a valid mobile phone number")
     .notEmpty()
     .withMessage("phone cannot be empty"),
+  body("dob")
+    .isDate()
+    .withMessage("must be a valid date")
+    .notEmpty()
+    .withMessage("phone cannot be empty"),
 ];
 
 const updateValidationRules = [
@@ -38,16 +44,8 @@ const updateValidationRules = [
     .isMobilePhone()
     .withMessage("must be a valid mobile phone number")
     .optional(),
+  body("dob").isDate().withMessage("must be a valid date").optional(),
 ];
-
-const { isValidObjectId } = require("mongoose");
-
-function validateIdParam(req, res, next) {
-  if (!isValidObjectId(req.params.id)) {
-    return res.status(400).json({ errors: [{ id: "invalid id parameter" }] });
-  }
-  next();
-}
 
 module.exports = {
   validateCreate: [...createValidationRules, validate],

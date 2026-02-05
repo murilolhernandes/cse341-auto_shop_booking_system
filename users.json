@@ -6,16 +6,7 @@
             },
         "firstName": "Robert",
         "lastName": "Atkin",
-        "dob": "01/12/2000",
-        "email": "boss@test.com",
-        "phone": "555-555-5555",
-        "userName": "manager",
-        "password": "f4kastu84",
-        "permission": [
-            "Manager",
-            "Worker",
-            "Front Desk"
-        ]
+        "email": "boss@test.com"
     },
     {
         "_id": {
@@ -23,14 +14,7 @@
             },
         "firstName": "Jason",
         "lastName": "Lakis",
-        "dob": "04/12/1999",
-        "email": "back@test.com",
-        "phone": "333-000-1234",
-        "userName": "workingallday",
-        "password": "36!ahhhJ",
-        "permission": [
-            "Mechanic"
-        ]
+        "email": "back@test.com"
     },
     {
         "_id": {
@@ -38,13 +22,6 @@
             },
         "firstName": "Quincee",
         "lastName": "Adams",
-        "dob": "10/19/1993",
-        "email": "front@test.com",
-        "phone": "444-999-7689",
-        "userName": "desklady",
-        "password": "5h88s!Q",
-        "permission": [
-            "Front Desk"
-        ]
+        "email": "front@test.com"
     }
 ]

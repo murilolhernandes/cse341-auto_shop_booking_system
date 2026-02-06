@@ -199,10 +199,10 @@
             "type": "object",
             "properties": {
               "firstName": {
-                "example": "jacob"
+                "example": "Jacob"
               },
               "lastName": {
-                "example": "brown"
+                "example": "Brown"
               },
               "email": {
                 "example": "jacob@email.com"
@@ -274,11 +274,14 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
+                "firstName": {
+                  "example": "Jason"
+                },
+                "lastName": {
+                  "example": "Robertson"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "jason.robertson@email.com"
                 }
               }
             }

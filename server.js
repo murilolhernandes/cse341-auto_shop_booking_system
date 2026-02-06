@@ -4,10 +4,13 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
+const MongoStore = require('connect-mongo').default;
 
 const port = process.env.PORT || 3000;
 const app = express();
 require('./config/passport')(passport);
+
+// app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
 
 // Setup the server to accept bodyParser (to parse the data from the DB), passport (validate the user through Google OAuth2.0), and set the API headers.
 app
@@ -15,7 +18,15 @@ app
   .use(session({
     secret: 'secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URL,
+    }),
+    cookie: {
+      // secure: true, // For Render (HTTPS)
+      // httpOnly: true, // Prevents client-side JS from reading the cookie
+      maxAge: 8.5 * 60 * 60 * 1000 // Session will expire in 8 hours (a normal work day)
+    }
   }))
   .use(passport.initialize())
   .use(passport.session())
@@ -36,9 +47,8 @@ app
   .use('/', require('./routes/'));
 
 app.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: '/api-docs', session: false}),
+  failureRedirect: '/api-docs', session: true}),
   (req, res) => {
-    req.session.user = req.user;
     res.redirect('/');
   });
 

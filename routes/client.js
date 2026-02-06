@@ -10,6 +10,7 @@ router.post("/", isAuthenticated, clientValidator.validateCreate, clientControll
 router.put("/:id", isAuthenticated, clientValidator.validateUpdate, clientController.update);
 router.delete(
   "/:id",
+  isAuthenticated,
   clientValidator.validateDeleteOne,
   clientController.remove,
 );

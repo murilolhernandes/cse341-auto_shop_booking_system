@@ -70,15 +70,18 @@ const updateUser = async (req, res) => {
 
     const userId = new ObjectId(req.params.id);
     const user = {
-      name: req.body.name,
-      email: req.body.email
+      $set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+      }
     };
 
     const response = await mongodb
       .getDb()
       .db()
       .collection('users')
-      .replaceOne({ _id: userId }, user);
+      .updateOne({ _id: userId }, user);
 
     if (response.modifiedCount === 0) {
       return res.status(404).json({ message: 'User not found or no changes made' });

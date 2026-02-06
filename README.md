@@ -37,5 +37,5 @@ npm i cors
 ```
 #### **-- New ones below this comment and inside the triple backticks--**
 ```
-
+npm i connect-mongo - (Improves the memory by storing the user's loggin state to the database)
 ```

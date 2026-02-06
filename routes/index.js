@@ -4,8 +4,7 @@ const authentication = require('../utilities/authenticate');
 router.use('/', require('./swagger'));
 
 router.get('/', (req, res) => {
-  res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.firstName}` : "Logged out");
-  
+  res.send(req.isAuthenticated() ? `Logged in as ${req.user.firstName}` : "Logged out");
 });
 
 router.get('/login', authentication.login, (req, res) => {});
@@ -13,7 +12,14 @@ router.get('/login', authentication.login, (req, res) => {});
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
     if (err) { return next(err); }
-    res.redirect('/');
+
+    // Remove old sessions to keep db clean
+    req.session.destroy(function(err) {
+      if (err) {
+        console.log('Error destroying session:', err);
+      }
+      res.redirect('/');
+    });
   });
 });
 

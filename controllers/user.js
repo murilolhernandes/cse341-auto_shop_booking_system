@@ -70,7 +70,8 @@ const updateUser = async (req, res) => {
 
     const userId = new ObjectId(req.params.id);
     const user = {
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email
     };
 

@@ -1,0 +1,81 @@
+
+[
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a65"
+            },
+        "make": "Land Rover",
+        "model": "Highlander",
+        "year": "2023",
+        "engine": "Flat",
+        "color": "Light Green",
+        "mileage": "85000",
+        "passanger": "5",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a76"}
+    },
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a66"
+            },
+        "make": "Ford",
+        "model": "Explorer",
+        "year": "2022",
+        "engine": "Cobra Jet",
+        "color": "Red",
+        "mileage": "60000",
+        "passanger": "3",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a79"}
+    },
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a67"
+            },
+        "make": "GMC",
+        "model": "Sierra",
+        "year": "1985",
+        "engine": "Iron Duke",
+        "color": "Dark Blue",
+        "mileage": "50000",
+        "passanger": "3",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a79"}
+    },
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a68"
+            },
+        "make": "Subaru",
+        "model": "Outback",
+        "year": "2008",
+        "engine": "Straight-6",
+        "color": "Silver",
+        "mileage": "75000",
+        "passanger": "5",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a77"}
+    },
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a69"
+            },
+        "make": "Nissan",
+        "model": "Altima",
+        "year": "2020",
+        "engine": "Rotary",
+        "color": "Black",
+        "mileage": "40000",
+        "passanger": "5",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a78"}
+    },
+    {
+        "_id": {
+    "$oid": "69839a192c2aa925aa337a6a"
+            },
+        "make": "Chevrolet",
+        "model": "Cruise",
+        "year": "2018",
+        "engine": "V6",
+        "color": "White",
+        "mileage": "80000",
+        "passanger": "5",
+        "clientId": {"$oid": "69839a8d2c2aa925aa337a7a"}
+    }
+]

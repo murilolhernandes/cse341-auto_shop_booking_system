@@ -1,15 +1,14 @@
 const router = require('express').Router(); 
-const passport = require('passport');
+const authentication = require('../utilities/authenticate');
 
 router.use('/', require('./swagger'));
 
 router.get('/', (req, res) => {
-
-  res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : "Logged out");
+  res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.firstName}` : "Logged out");
   
 });
 
-router.get('/login', passport.authenticate('google', { scope: ['profile', 'email'] }), (req, res) => {});
+router.get('/login', authentication.login, (req, res) => {});
 
 router.get('/logout', function(req, res, next) {
   req.logout(function(err) {
@@ -18,7 +17,7 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
-router.use("/clients", require("./client"));
+router.use("/client", require("./client"));
 
 
 router.use("/user", require("./user"));

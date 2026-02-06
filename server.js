@@ -3,11 +3,11 @@ const mongodb = require('./db/connect');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 const app = express();
+require('./config/passport')(passport);
 
 // Setup the server to accept bodyParser (to parse the data from the DB), passport (validate the user through Google OAuth2.0), and set the API headers.
 app
@@ -34,24 +34,6 @@ app
   .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
   .use(cors({ origin: '*' }))
   .use('/', require('./routes/'));
-
-// Setup the passport authentication using Google OAuth2.0
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: process.env.CALLBACK_URL
-  },
-  function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
-  }
-));
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 app.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/api-docs', session: false}),

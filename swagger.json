@@ -20,17 +20,7 @@
         }
       }
     },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/clients/": {
+    "/client/": {
       "get": {
         "description": "",
         "produces": [
@@ -83,7 +73,7 @@
         }
       }
     },
-    "/clients/{id}": {
+    "/client/{id}": {
       "get": {
         "description": "",
         "produces": [
@@ -195,7 +185,41 @@
             "description": "Internal Server Error"
           }
         }
+      },
+      "post": {
+      "tags": [
+        "Users"
+      ],
+      "description": "",
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "example": "jacob"
+              },
+              "lastName": {
+                "example": "brown"
+              },
+              "email": {
+                "example": "jacob@email.com"
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "201": {
+          "description": "Created"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
       }
+    }
     },
     "/user/{id}": {
       "get": {

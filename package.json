@@ -22,6 +22,7 @@
   "homepage": "https://github.com/murilolhernandes/cse341-auto_shop_booking_system#readme",
   "dependencies": {
     "body-parser": "^2.2.2",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",

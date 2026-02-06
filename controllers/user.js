@@ -1,7 +1,6 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-
 const getAllUsers = async (req, res) => {
   try {
     const result = await mongodb
@@ -45,6 +44,23 @@ const getUserById = async (req, res) => {
   }
 };
 
+const createUser = async (req, res) => {
+  try {
+    const newUser = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    };
+    const response = await mongodb.getDb().db().collection('users').insertOne(newUser);
+    if (response.acknowledged) {
+      return res.status(201).json({ id: response.insertedId });
+    } else {
+      return res.status(500).json({ message: 'Some error occurred while creating the user.' });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 
 const updateUser = async (req, res) => {
   try {
@@ -54,16 +70,18 @@ const updateUser = async (req, res) => {
 
     const userId = new ObjectId(req.params.id);
     const user = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email
+      $set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+      }
     };
 
     const response = await mongodb
       .getDb()
       .db()
       .collection('users')
-      .replaceOne({ _id: userId }, user);
+      .updateOne({ _id: userId }, user);
 
     if (response.modifiedCount === 0) {
       return res.status(404).json({ message: 'User not found or no changes made' });
@@ -102,6 +120,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
+  createUser,
   updateUser,
   deleteUser
 };

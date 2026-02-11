@@ -1,0 +1,11 @@
+{
+  "model": "",
+  "brand": "",
+  "plate": "",
+  "color": "",
+  "passengers": 0,
+  "doors": 0,
+  "engine_type": "Gas | Diesel | Electric | Hybrid",
+  "transmission": "Manual | Automatic",
+  "year": 0
+}

@@ -545,8 +545,20 @@
         "year": {
           "type": "number",
           "example": 0
+        },
+        "clientId": {
+          "type": "string",
+          "example": ""
         }
       }
+    },
+    "User": {
+      "type": "object",
+      "properties": {}
+    },
+    "Client": {
+      "type": "object",
+      "properties": {}
     }
   }
 }

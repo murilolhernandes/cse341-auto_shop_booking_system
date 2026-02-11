@@ -20,6 +20,7 @@ const carSchema = Joi.object({
   transmission: Joi.string().valid("Manual", "Automatic").required(),
 
   year: Joi.number().min(1900).max(new Date().getFullYear()),
+
   clientId: Joi.string().alphanum().min(24).max(24).required(),
 });
 

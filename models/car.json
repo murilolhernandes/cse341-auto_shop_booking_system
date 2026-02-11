@@ -7,5 +7,6 @@
   "doors": 0,
   "engine_type": "Gas | Diesel | Electric | Hybrid",
   "transmission": "Manual | Automatic",
-  "year": 0
+  "year": 0,
+  "clientId": ""
 }

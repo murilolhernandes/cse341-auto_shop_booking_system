@@ -28,7 +28,7 @@ async function findOne(req, res) {
     const result = await collection.find({ _id: id });
     const clients = await result.toArray();
 
-    if (!clients.length) return res.status(404).json("record not found");
+    if (!clients.length) return res.status(404).json("Record not found");
 
     res.setHeader("Content-type", "application/json");
     return res.status(200).json(clients[0]);
@@ -56,7 +56,7 @@ async function create(req, res) {
 
     if (result.acknowledged) {
       return res.status(201).json({ id: result.insertedId });
-    } else throw new Error("failed to create new client");
+    } else throw new Error("Failed to create new client");
   } catch (error) {
     console.log(error);
     return res.status(500).json("Oops! Something went wrong");
@@ -77,7 +77,7 @@ async function update(req, res) {
 
     if (result.acknowledged) {
       return res.sendStatus(204);
-    } else throw new Error("failed to update client");
+    } else throw new Error("Failed to update client");
   } catch (error) {
     console.log(error);
     return res.status(500).json("Oops! Something went wrong");
@@ -91,12 +91,12 @@ async function remove(req, res) {
     const result = await collection.deleteOne({ _id: id });
 
     if (result.acknowledged && result.deletedCount == 0) {
-      return res.status(404).json("record not found");
+      return res.status(404).json("Record not found");
     }
 
     if (result.deletedCount > 0) {
       return res.sendStatus(204);
-    } else throw new Error("failed to delete client");
+    } else throw new Error("Failed to delete client");
   } catch (error) {
     console.log(error);
     return res.status(500).json("Oops! Something went wrong");

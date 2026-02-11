@@ -5,46 +5,52 @@ const validateIdParam = require("../utilities/validateIdParam");
 const createValidationRules = [
   body("firstName")
     .isString()
-    .withMessage("firstName must be a String")
+    .withMessage("First name must be a string")
     .notEmpty()
-    .withMessage("firstName cannot be empty"),
+    .withMessage("First name cannot be empty"),
   body("lastName")
     .isString()
-    .withMessage("lastName must be a String")
+    .withMessage("Last name must be a string")
     .notEmpty()
-    .withMessage("lastName cannot be empty"),
+    .withMessage("Last name cannot be empty"),
   body("email")
     .isEmail()
-    .withMessage("must be a valid email")
+    .withMessage("Must be a valid email")
     .notEmpty()
-    .withMessage("email cannot be empty"),
+    .withMessage("Email cannot be empty"),
   body("phone")
     .isMobilePhone()
-    .withMessage("must be a valid mobile phone number")
+    .withMessage("Must be a valid mobile phone number")
     .notEmpty()
-    .withMessage("phone cannot be empty"),
+    .withMessage("Phone cannot be empty"),
   body("dob")
     .isDate()
-    .withMessage("must be a valid date")
+    .withMessage("Must be a valid date")
     .notEmpty()
-    .withMessage("phone cannot be empty"),
+    .withMessage("Phone cannot be empty"),
 ];
 
 const updateValidationRules = [
   body("firstName")
     .isString()
-    .withMessage("firstName must be a String")
+    .withMessage("First name must be a string")
     .optional(),
   body("lastName")
     .isString()
-    .withMessage("lastName must be a String")
+    .withMessage("Last name must be a string")
     .optional(),
-  body("email").isEmail().withMessage("must be a valid email").optional(),
+  body("email")
+    .isEmail()
+    .withMessage("Must be a valid email")
+    .optional(),
   body("phone")
     .isMobilePhone()
-    .withMessage("must be a valid mobile phone number")
+    .withMessage("Must be a valid mobile phone number")
     .optional(),
-  body("dob").isDate().withMessage("must be a valid date").optional(),
+  body("dob")
+  .isDate()
+  .withMessage("Must be a valid date")
+  .optional(),
 ];
 
 module.exports = {

@@ -10,24 +10,32 @@ const port = process.env.PORT || 3000;
 const app = express();
 require('./config/passport')(passport);
 
+// Error Hangling
+const {
+  logErrorMiddleware,
+  returnError,
+} = require('./error-handling/errorHandler');
+
 // app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
 
 // Setup the server to accept bodyParser (to parse the data from the DB), passport (validate the user through Google OAuth2.0), and set the API headers.
 app
   .use(bodyParser.json())
-  .use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URL,
-    }),
-    cookie: {
-      // secure: true, // For Render (HTTPS)
-      // httpOnly: true, // Prevents client-side JS from reading the cookie
-      maxAge: 8.5 * 60 * 60 * 1000 // Session will expire in 8 hours (a normal work day)
-    }
-  }))
+  .use(
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URL,
+      }),
+      cookie: {
+        // secure: true, // For Render (HTTPS)
+        // httpOnly: true, // Prevents client-side JS from reading the cookie
+        maxAge: 8.5 * 60 * 60 * 1000, // Session will expire in 8 hours (a normal work day)
+      },
+    })
+  )
   .use(passport.initialize())
   .use(passport.session())
   .use((req, res, next) => {
@@ -46,11 +54,22 @@ app
   .use(cors({ origin: '*' }))
   .use('/', require('./routes/'));
 
-app.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: '/api-docs', session: true}),
+/* ***********************
+ * Error Handling
+ *************************/
+app.use(logErrorMiddleware);
+app.use(returnError);
+
+app.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/api-docs',
+    session: true,
+  }),
   (req, res) => {
     res.redirect('/');
-  });
+  }
+);
 
 mongodb.initDb((err) => {
   if (err) {

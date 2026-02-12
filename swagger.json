@@ -5,9 +5,12 @@
     "description": "Auto Shop Booking System API",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-auto-shop-booking-system.onrender.com",
   "basePath": "/",
-  "schemes": ["http", "https"],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "paths": {
     "/": {
       "get": {
@@ -52,7 +55,9 @@
     "/client/": {
       "get": {
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -109,7 +114,9 @@
     "/client/{id}": {
       "get": {
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -141,30 +148,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "dob": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -207,9 +190,13 @@
     },
     "/car/": {
       "get": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Get all cars",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -220,9 +207,13 @@
         }
       },
       "post": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Create a new car",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -246,9 +237,13 @@
     },
     "/car/{id}": {
       "get": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Get a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -267,9 +262,13 @@
         }
       },
       "put": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Update a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -297,9 +296,13 @@
         }
       },
       "delete": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Delete a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -321,7 +324,9 @@
     "/user/": {
       "get": {
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -372,7 +377,9 @@
     "/user/{id}": {
       "get": {
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -523,11 +530,45 @@
     },
     "User": {
       "type": "object",
-      "properties": {}
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": ""
+        },
+        "lastName": {
+          "type": "string",
+          "example": ""
+        },
+        "email": {
+          "type": "string",
+          "example": ""
+        }
+      }
     },
     "Client": {
       "type": "object",
-      "properties": {}
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": ""
+        },
+        "lastName": {
+          "type": "string",
+          "example": ""
+        },
+        "email": {
+          "type": "string",
+          "example": ""
+        },
+        "phone": {
+          "type": "string",
+          "example": ""
+        },
+        "dob": {
+          "type": "string",
+          "example": ""
+        }
+      }
     }
   }
 }

@@ -1,11 +1,14 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const carSchema = Joi.object({
   model: Joi.string().min(3).max(30).required(),
 
   brand: Joi.string().min(3).max(30).required(),
 
-  plate: Joi.string().pattern(/^[A-Z0-9\- ]+$/i).min(3).max(12),
+  plate: Joi.string()
+    .pattern(/^[A-Z0-9\- ]+$/i)
+    .min(3)
+    .max(12),
 
   color: Joi.string().min(2).max(30),
 
@@ -14,10 +17,10 @@ const carSchema = Joi.object({
   doors: Joi.number().min(1).max(8),
 
   engine_type: Joi.string()
-    .valid("Gas", "Diesel", "Electric", "Hybrid")
+    .valid('Gas', 'Diesel', 'Electric', 'Hybrid')
     .required(),
 
-  transmission: Joi.string().valid("Manual", "Automatic").required(),
+  transmission: Joi.string().valid('Manual', 'Automatic').required(),
 
   year: Joi.number().min(1900).max(new Date().getFullYear()),
 

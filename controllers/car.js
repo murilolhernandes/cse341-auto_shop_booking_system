@@ -1,10 +1,10 @@
-const ObjectId = require("mongodb").ObjectId;
-const { carSchema } = require("./../validation/carSchema");
-const Api400Error = require("../error-handling/api400Error");
-const Api404Error = require("../error-handling/api404Error");
-const { getDb } = require("../db/connect");
+const ObjectId = require('mongodb').ObjectId;
+const { carSchema } = require('./../validation/carSchema');
+const Api400Error = require('../error-handling/api400Error');
+const Api404Error = require('../error-handling/api404Error');
+const { getDb } = require('../db/connect');
 
-const collectionName = "cars";
+const collectionName = 'cars';
 
 async function getDbCollection() {
   return getDb().db().collection(collectionName);
@@ -19,7 +19,7 @@ const getAll = async (req, res, next) => {
     const collection = await getDbCollection();
     const result = await collection.find({});
     result.toArray().then((cars) => {
-      res.setHeader("Content-Type", "application/json");
+      res.setHeader('Content-Type', 'application/json');
       res.status(200).json(cars);
     });
   } catch (err) {
@@ -34,7 +34,7 @@ const getById = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error("Invalid user id");
+      throw new Api400Error('Invalid user id');
     }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();
@@ -43,9 +43,9 @@ const getById = async (req, res, next) => {
     const cars = await result.toArray();
 
     if (cars.length === 0) {
-      throw new Api404Error("Car not found");
+      throw new Api404Error('Car not found');
     }
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader('Content-Type', 'application/json');
     res.status(200).json(cars[0]);
   } catch (err) {
     next(err);
@@ -69,10 +69,10 @@ const createCar = async (req, res, next) => {
     const result = await collection.insertOne(validateResult);
 
     if (result.acknowledged) {
-      res.setHeader("Content-Type", "application/json");
+      res.setHeader('Content-Type', 'application/json');
       res.status(201).json(result.insertedId);
     } else {
-      throw new Error("Failed to create car");
+      throw new Error('Failed to create car');
     }
   } catch (err) {
     if (err.isJoi) {
@@ -96,22 +96,22 @@ const updateCar = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error("Invalid user id");
+      throw new Api400Error('Invalid user id');
     }
     const carId = new ObjectId(req.params.id);
     const validateResult = await carSchema.validateAsync(req.body);
     const collection = await getDbCollection();
     const result = await collection.updateOne(
       { _id: carId },
-      { $set: validateResult },
+      { $set: validateResult }
     );
     if (result.modifiedCount > 0) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).json({ message: "Car updated successfully" });
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json({ message: 'Car updated successfully' });
     } else if (result.matchedCount === 0) {
-      throw new Api404Error("Car not found");
+      throw new Api404Error('Car not found');
     } else {
-      throw new Api400Error("No changes made to car, bad request");
+      throw new Api400Error('No changes made to car, bad request');
     }
   } catch (err) {
     if (err.isJoi) {
@@ -129,16 +129,16 @@ const deleteCar = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error("Invalid user id");
+      throw new Api400Error('Invalid user id');
     }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();
     const result = await collection.deleteOne({ _id: carId });
     if (result.deletedCount > 0) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).json({ message: "Car deleted successfully" });
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json({ message: 'Car deleted successfully' });
     } else {
-      throw new Api404Error("Car not found");
+      throw new Api404Error('Car not found');
     }
   } catch (err) {
     next(err);

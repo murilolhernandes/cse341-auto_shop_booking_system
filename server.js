@@ -1,21 +1,20 @@
-const express = require("express");
-const mongodb = require("./db/connect");
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const session = require("express-session");
-const cors = require("cors");
-const MongoStore = require("connect-mongo").default;
+const express = require('express');
+const mongodb = require('./db/connect');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const cors = require('cors');
+const MongoStore = require('connect-mongo').default;
 
 const port = process.env.PORT || 3000;
 const app = express();
-require("./config/passport")(passport);
+require('./config/passport')(passport);
 
 // Error Hangling
 const {
   logErrorMiddleware,
   returnError,
-  isOperationalError,
-} = require("./error-handling/errorHandler");
+} = require('./error-handling/errorHandler');
 
 // app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
 
@@ -24,7 +23,7 @@ app
   .use(bodyParser.json())
   .use(
     session({
-      secret: "secret",
+      secret: 'secret',
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({
@@ -35,25 +34,25 @@ app
         // httpOnly: true, // Prevents client-side JS from reading the cookie
         maxAge: 8.5 * 60 * 60 * 1000, // Session will expire in 8 hours (a normal work day)
       },
-    }),
+    })
   )
   .use(passport.initialize())
   .use(passport.session())
   .use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization",
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
     );
     res.setHeader(
-      "Access-Control-Allow-Methods",
-      "POST, GET, PUT, PATCH, OPTIONS, DELETE",
+      'Access-Control-Allow-Methods',
+      'POST, GET, PUT, PATCH, OPTIONS, DELETE'
     );
     next();
   })
-  .use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }))
-  .use(cors({ origin: "*" }))
-  .use("/", require("./routes/"));
+  .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
+  .use(cors({ origin: '*' }))
+  .use('/', require('./routes/'));
 
 /* ***********************
  * Error Handling
@@ -62,14 +61,14 @@ app.use(logErrorMiddleware);
 app.use(returnError);
 
 app.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/api-docs",
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/api-docs',
     session: true,
   }),
   (req, res) => {
-    res.redirect("/");
-  },
+    res.redirect('/');
+  }
 );
 
 mongodb.initDb((err) => {

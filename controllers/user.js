@@ -7,11 +7,7 @@ const getAllUsers = async (req, res) => {
    #swagger.description = 'Get all users'
   */
   try {
-    const result = await mongodb
-      .getDb()
-      .db()
-      .collection('users')
-      .find();
+    const result = await mongodb.getDb().db().collection('users').find();
 
     const users = await result.toArray();
     res.setHeader('Content-Type', 'application/json');
@@ -20,7 +16,6 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 const getUserById = async (req, res) => {
   /*
@@ -79,13 +74,19 @@ const createUser = async (req, res) => {
     const newUser = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      email: req.body.email
+      email: req.body.email,
     };
-    const response = await mongodb.getDb().db().collection('users').insertOne(newUser);
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection('users')
+      .insertOne(newUser);
     if (response.acknowledged) {
       return res.status(201).json({ id: response.insertedId });
     } else {
-      return res.status(500).json({ message: 'Some error occurred while creating the user.' });
+      return res
+        .status(500)
+        .json({ message: 'Some error occurred while creating the user.' });
     }
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -126,7 +127,7 @@ const updateUser = async (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-      }
+      },
     };
 
     const response = await mongodb
@@ -136,7 +137,9 @@ const updateUser = async (req, res) => {
       .updateOne({ _id: userId }, user);
 
     if (response.modifiedCount === 0) {
-      return res.status(404).json({ message: 'User not found' });
+      return res
+        .status(404)
+        .json({ message: 'User not found or no changes made' });
     }
 
     res.status(200).json("User was updated successfully");
@@ -144,7 +147,6 @@ const updateUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 const deleteUser = async (req, res) => {
   /*
@@ -184,5 +186,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };

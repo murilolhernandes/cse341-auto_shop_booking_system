@@ -1,9 +1,9 @@
-const { body } = require("express-validator");
-const validate = require("./validate");
-const validateIdParam = require("./validateIdParam");
+const { body } = require('express-validator');
+const validate = require('../utilities/validate');
+const validateIdParam = require('../utilities/validateIdParam');
 
 const createValidationRules = [
-  body("firstName")
+  body('firstName')
     .isString()
     .withMessage("First name must be a string")
     .notEmpty()
@@ -31,11 +31,11 @@ const createValidationRules = [
 ];
 
 const updateValidationRules = [
-  body("firstName")
+  body('firstName')
     .isString()
     .withMessage("First name must be a string")
     .optional(),
-  body("lastName")
+  body('lastName')
     .isString()
     .withMessage("Last name must be a string")
     .optional(),

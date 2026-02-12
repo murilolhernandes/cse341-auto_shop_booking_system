@@ -5,7 +5,9 @@
     "description": "Auto Shop Booking System API",
     "version": "1.0.0"
   },
+  "host": "localhost:3000",
   "basePath": "/",
+  "schemes": ["http", "https"],
   "paths": {
     "/client/": {
       "get": {
@@ -20,6 +22,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -38,19 +43,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "jacob"
+                  "example": "any"
                 },
                 "lastName": {
-                  "example": "brown"
+                  "example": "any"
                 },
                 "email": {
-                  "example": "jacob@email.com"
+                  "example": "any"
                 },
                 "phone": {
-                  "example": "0756456352"
+                  "example": "any"
                 },
                 "dob": {
-                  "example": "1990/02/05"
+                  "example": "any"
                 }
               }
             }
@@ -59,6 +64,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -72,9 +80,7 @@
           "Clients"
         ],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -86,6 +92,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -114,19 +123,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "peter"
+                  "example": "any"
                 },
                 "lastName": {
-                  "example": "hamming"
+                  "example": "any"
                 },
                 "email": {
-                  "example": "peter@email.com"
+                  "example": "any"
                 },
                 "phone": {
-                  "example": "0345243857"
+                  "example": "any"
                 },
                 "dob": {
-                  "example": "1998/07/02"
+                  "example": "any"
                 }
               }
             }
@@ -135,6 +144,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -158,6 +170,9 @@
           "204": {
             "description": "No Content"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -167,15 +182,123 @@
         }
       }
     },
+    "/car/": {
+      "get": {
+        "tags": ["Cars"],
+        "description": "Get all cars",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cars"],
+        "description": "Create a new car",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Car information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Car"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/car/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "description": "Get a car by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Cars"],
+        "description": "Update a car by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Car information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Car"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cars"],
+        "description": "Delete a car by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/user/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -189,49 +312,44 @@
         }
       },
       "post": {
-      "tags": [
-        "Users"
-      ],
-      "description": "",
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "firstName": {
-                "example": "Jacob"
-              },
-              "lastName": {
-                "example": "Brown"
-              },
-              "email": {
-                "example": "jacob@email.com"
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                }
               }
             }
           }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Created"
-        },
-        "500": {
-          "description": "Internal Server Error"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
-    }
     },
     "/user/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -259,9 +377,6 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
         "parameters": [
           {
@@ -277,13 +392,13 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "Jason"
+                  "example": "any"
                 },
                 "lastName": {
-                  "example": "Robertson"
+                  "example": "any"
                 },
                 "email": {
-                  "example": "jason.robertson@email.com"
+                  "example": "any"
                 }
               }
             }
@@ -308,9 +423,6 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
         "description": "",
         "parameters": [
           {
@@ -514,6 +626,61 @@
           }
         }
       }
+    }
+  },
+  "definitions": {
+    "Car": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "example": ""
+        },
+        "brand": {
+          "type": "string",
+          "example": ""
+        },
+        "plate": {
+          "type": "string",
+          "example": ""
+        },
+        "color": {
+          "type": "string",
+          "example": ""
+        },
+        "passengers": {
+          "type": "number",
+          "example": 0
+        },
+        "doors": {
+          "type": "number",
+          "example": 0
+        },
+        "engine_type": {
+          "type": "string",
+          "example": "Gas | Diesel | Electric | Hybrid"
+        },
+        "transmission": {
+          "type": "string",
+          "example": "Manual | Automatic"
+        },
+        "year": {
+          "type": "number",
+          "example": 0
+        },
+        "clientId": {
+          "type": "string",
+          "example": ""
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {}
+    },
+    "Client": {
+      "type": "object",
+      "properties": {}
     }
   }
 }

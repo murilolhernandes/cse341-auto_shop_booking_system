@@ -8,6 +8,7 @@ const doc = {
     title: 'Auto Shop Booking System API',
     description: 'Auto Shop Booking System API',
   },
+  host: 'cse341-auto-shop-booking-system.onrender.com',
   schemes: ['http', 'https'],
   definitions: {
     Car: car,

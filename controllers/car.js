@@ -1,4 +1,4 @@
-// const mongodb = require("../db/connect");
+
 const ObjectId = require("mongodb").ObjectId;
 const { carSchema } = require("./../validation/carSchema");
 const Api400Error = require("../error-handling/api400Error");
@@ -61,7 +61,7 @@ const createCar = async (req, res, next) => {
   }
   */
   try {
-    console.log("Creating car with data:", req.body);
+
     const validateResult = await carSchema.validateAsync(req.body);
     const collection = await getDbCollection();
     const result = await collection.insertOne(validateResult);
@@ -70,7 +70,7 @@ const createCar = async (req, res, next) => {
       res.setHeader("Content-Type", "application/json");
       res.status(201).json(result.insertedId);
     } else {
-      throw new Api404Error("Failed to create car");
+      throw new Error("Failed to create car");
     }
   } catch (err) {
     if (err.isJoi) {

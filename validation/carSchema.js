@@ -3,9 +3,9 @@ const Joi = require("joi");
 const carSchema = Joi.object({
   model: Joi.string().min(3).max(30).required(),
 
-  brand: Joi.string().alphanum().min(3).max(30).required(),
+  brand: Joi.string().min(3).max(30).required(),
 
-  plate: Joi.string().alphanum().min(3).max(12),
+  plate: Joi.string().pattern(/^[A-Z0-9\- ]+$/i).min(3).max(12),
 
   color: Joi.string().min(2).max(30),
 
@@ -21,7 +21,7 @@ const carSchema = Joi.object({
 
   year: Joi.number().min(1900).max(new Date().getFullYear()),
 
-  clientId: Joi.string().alphanum().min(24).max(24).required(),
+  clientId: Joi.string().hex().min(24).max(24).required(),
 });
 
 module.exports = {

@@ -1,9 +1,14 @@
-
 const ObjectId = require("mongodb").ObjectId;
 const { carSchema } = require("./../validation/carSchema");
 const Api400Error = require("../error-handling/api400Error");
 const Api404Error = require("../error-handling/api404Error");
 const { getDb } = require("../db/connect");
+// Error Hangling
+const {
+  logError,
+  returnError,
+  isOperationalError,
+} = require("./src/error-handling/errorHandler");
 
 const collectionName = "cars";
 
@@ -27,12 +32,16 @@ const getAll = async (req, res, next) => {
     next(err);
   }
 };
+
 const getById = async (req, res, next) => {
   /*
   #swagger.tags = ['Cars']
   #swagger.description = 'Get a car by id'
   */
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return Api400Error("Invalid user id");
+    }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();
     const result = await collection.find({ _id: carId });
@@ -61,7 +70,9 @@ const createCar = async (req, res, next) => {
   }
   */
   try {
-
+    if (!ObjectId.isValid(req.params.id)) {
+      return Api400Error("Invalid user id");
+    }
     const validateResult = await carSchema.validateAsync(req.body);
     const collection = await getDbCollection();
     const result = await collection.insertOne(validateResult);
@@ -93,6 +104,9 @@ const updateCar = async (req, res, next) => {
   }
   */
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return Api400Error("Invalid user id");
+    }
     const carId = new ObjectId(req.params.id);
     const validateResult = await carSchema.validateAsync(req.body);
     const collection = await getDbCollection();
@@ -116,12 +130,16 @@ const updateCar = async (req, res, next) => {
     }
   }
 };
+
 const deleteCar = async (req, res, next) => {
   /*
   #swagger.tags = ['Cars']
   #swagger.description = 'Delete a car by id'
   */
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return Api400Error("Invalid user id");
+    }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();
     const result = await collection.deleteOne({ _id: carId });

@@ -25,7 +25,9 @@ jest.mock('../db/connect', () => ({
   getDb: () => mockGetDb()
 }));
 
-const app = require('../app');
+const { createApp } = require('../server');
+const app = createApp();
+
 
 describe('Users GET /user/:id', () => {
   beforeEach(() => {

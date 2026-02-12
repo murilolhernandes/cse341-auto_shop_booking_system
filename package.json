@@ -4,8 +4,8 @@
   "description": "CSE 341 - Team Project: Auto Shop Booking System",
   "main": "server.js",
   "scripts": {
-    "test": "jest --runInBand",
-    "test:watch": "jest --watchAll",
+    "test": "set NODE_ENV=test&& jest --runInBand",
+    "test:watch": "set NODE_ENV=test&& jest --watchAll",
     "start": "nodemon server.js",
     "swagger": "node ./swagger.js"
   },

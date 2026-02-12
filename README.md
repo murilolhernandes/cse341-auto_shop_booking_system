@@ -32,3 +32,17 @@ npm i
 ```
 npm i connect-mongo - (Improves the memory by storing the user's loggin state to the database)
 ```
+
+
+
+### Run Unit Tests
+
+### This project uses Jest and Supertest for API testing.
+
+### Run all tests:
+
+npm test
+
+### Run tests in watch mode:
+
+npm run test:watch

@@ -7,75 +7,79 @@ const cors = require('cors');
 const MongoStore = require('connect-mongo').default;
 
 const port = process.env.PORT || 3000;
-const app = express();
-require('./config/passport')(passport);
 
-// Error Hangling
-const {
-  logErrorMiddleware,
-  returnError,
-} = require('./error-handling/errorHandler');
+function createApp() {
+  const app = express();
 
-// app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
+  require('./config/passport')(passport);
 
-// Setup the server to accept bodyParser (to parse the data from the DB), passport (validate the user through Google OAuth2.0), and set the API headers.
-app
-  .use(bodyParser.json())
-  .use(
-    session({
-      secret: 'secret',
-      resave: false,
-      saveUninitialized: false,
-      store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URL,
-      }),
-      cookie: {
-        // secure: true, // For Render (HTTPS)
-        // httpOnly: true, // Prevents client-side JS from reading the cookie
-        maxAge: 8.5 * 60 * 60 * 1000, // Session will expire in 8 hours (a normal work day)
-      },
+  // Error Hangling
+  const {
+    logErrorMiddleware,
+    returnError,
+  } = require('./error-handling/errorHandler');
+  
+  app
+    .use(bodyParser.json())
+    .use(
+      session({
+        secret: 'secret',
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+          mongoUrl: process.env.MONGODB_URL
+        }),
+        cookie: {
+          maxAge: 8.5 * 60 * 60 * 1000
+        }
+      })
+    )
+    .use(passport.initialize())
+    .use(passport.session())
+    .use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
+      );
+      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, PATCH, OPTIONS, DELETE');
+      next();
     })
-  )
-  .use(passport.initialize())
-  .use(passport.session())
-  .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
-    );
-    res.setHeader(
-      'Access-Control-Allow-Methods',
-      'POST, GET, PUT, PATCH, OPTIONS, DELETE'
-    );
-    next();
-  })
-  .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
-  .use(cors({ origin: '*' }))
-  .use('/', require('./routes/'));
+    .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
+    .use(cors({ origin: '*' }))
+    .use('/', require('./routes/'));
 
-/* ***********************
- * Error Handling
- *************************/
-app.use(logErrorMiddleware);
-app.use(returnError);
+  app.get(
+    '/google/callback',
+    passport.authenticate('google', {
+      failureRedirect: '/api-docs',
+      session: true
+    }),
+    (req, res) => {
+      res.redirect('/');
+    }
+  );
+  
+  /* ***********************
+   * Error Handling
+   *************************/
+  app.use(logErrorMiddleware);
+  app.use(returnError);
 
-app.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/api-docs',
-    session: true,
-  }),
-  (req, res) => {
-    res.redirect('/');
-  }
-);
+  return app;
+}
 
-mongodb.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port);
-    console.log(`Connected to DB and listening on ${port}`);
-  }
-});
+// Start server only when running normally (not during Jest tests)
+if (process.env.NODE_ENV !== 'test') {
+  mongodb.initDb((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const app = createApp();
+      app.listen(port);
+      console.log(`Connected to DB and listening on ${port}`);
+    }
+  });
+}
+
+module.exports = { createApp };

@@ -1,0 +1,32 @@
+const BaseError = require('./baseError');
+
+function logError(err) {
+  console.log(err);
+}
+
+function logErrorMiddleware(err, req, res, next) {
+  logError(err);
+  next(err);
+}
+
+// eslint-disable-next-line no-unused-vars
+function returnError(err, req, res, next) {
+  res.status(err.statusCode || 500).json({
+    error: err.name || 'Error',
+    message: err.message || 'Something went wrong',
+  });
+}
+
+function isOperationalError(error) {
+  if (error instanceof BaseError) {
+    return error.isOperational;
+  }
+  return false;
+}
+
+module.exports = {
+  logError,
+  logErrorMiddleware,
+  returnError,
+  isOperationalError,
+};

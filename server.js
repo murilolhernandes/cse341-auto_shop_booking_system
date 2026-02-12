@@ -13,6 +13,12 @@ function createApp() {
 
   require('./config/passport')(passport);
 
+  // Error Hangling
+  const {
+    logErrorMiddleware,
+    returnError,
+  } = require('./error-handling/errorHandler');
+  
   app
     .use(bodyParser.json())
     .use(
@@ -53,6 +59,12 @@ function createApp() {
       res.redirect('/');
     }
   );
+  
+  /* ***********************
+   * Error Handling
+   *************************/
+  app.use(logErrorMiddleware);
+  app.use(returnError);
 
   return app;
 }

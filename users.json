@@ -1,27 +1,26 @@
-
 [
-    {
-        "_id": {
-    "$oid": "69839a762c2aa925aa337a71"
-            },
-        "firstName": "Robert",
-        "lastName": "Atkin",
-        "email": "boss@test.com"
+  {
+    "_id": {
+      "$oid": "69839a762c2aa925aa337a71"
     },
-    {
-        "_id": {
-    "$oid": "69839a762c2aa925aa337a72"
-            },
-        "firstName": "Jason",
-        "lastName": "Lakis",
-        "email": "back@test.com"
+    "firstName": "Robert",
+    "lastName": "Atkin",
+    "email": "boss@test.com"
+  },
+  {
+    "_id": {
+      "$oid": "69839a762c2aa925aa337a72"
     },
-    {
-        "_id": {
-    "$oid": "69839a762c2aa925aa337a73"
-            },
-        "firstName": "Quincee",
-        "lastName": "Adams",
-        "email": "front@test.com"
-    }
+    "firstName": "Jason",
+    "lastName": "Lakis",
+    "email": "back@test.com"
+  },
+  {
+    "_id": {
+      "$oid": "69839a762c2aa925aa337a73"
+    },
+    "firstName": "Quincee",
+    "lastName": "Adams",
+    "email": "front@test.com"
+  }
 ]

@@ -17,17 +17,7 @@ const createValidationRules = [
     .isEmail()
     .withMessage("Must be a valid email")
     .notEmpty()
-    .withMessage("Email cannot be empty"),
-  body("phone")
-    .isMobilePhone()
-    .withMessage("Must be a valid mobile phone number")
-    .notEmpty()
-    .withMessage("Phone cannot be empty"),
-  body("dob")
-    .isDate()
-    .withMessage("Must be a valid date")
-    .notEmpty()
-    .withMessage("Phone cannot be empty"),
+    .withMessage("Email cannot be empty")
 ];
 
 const updateValidationRules = [
@@ -42,15 +32,7 @@ const updateValidationRules = [
   body("email")
     .isEmail()
     .withMessage("Must be a valid email")
-    .optional(),
-  body("phone")
-    .isMobilePhone()
-    .withMessage("Must be a valid mobile phone number")
-    .optional(),
-  body("dob")
-  .isDate()
-  .withMessage("Must be a valid date")
-  .optional(),
+    .optional()
 ];
 
 module.exports = {

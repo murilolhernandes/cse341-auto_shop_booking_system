@@ -28,4 +28,6 @@ router.use("/client", require("./client"));
 
 router.use("/user", require("./user"));
 
+router.use("/appointment", require("./appointment"));
+
 module.exports = router;

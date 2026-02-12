@@ -7,21 +7,11 @@
   },
   "basePath": "/",
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "Index Page"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/client/": {
       "get": {
+        "tags": [
+          "Clients"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -36,6 +26,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Clients"
+        ],
         "description": "",
         "parameters": [
           {
@@ -75,6 +68,9 @@
     },
     "/client/{id}": {
       "get": {
+        "tags": [
+          "Clients"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -100,6 +96,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Clients"
+        ],
         "description": "",
         "parameters": [
           {
@@ -143,6 +142,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Clients"
+        ],
         "description": "",
         "parameters": [
           {
@@ -330,6 +332,182 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/appointment/": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Find all appointments",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Create an appointment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Appointment information",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "698cd7c051e7d72397d7016a"
+                },
+                "clientId": {
+                  "example": "69839a8d2c2aa925aa337a77"
+                },
+                "carId": {
+                  "example": "69839a192c2aa925aa337a66"
+                },
+                "date": {
+                  "example": "02/12/2026"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/appointment/{id}": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Find an appointment by id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Update an appointment by id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Appointment information",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "698cd47d51e7d72397d70169"
+                },
+                "clientId": {
+                  "example": "69839a8d2c2aa925aa337a79"
+                },
+                "carId": {
+                  "example": "69839a192c2aa925aa337a67"
+                },
+                "date": {
+                  "example": "02/13/2026"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Appointments"
+        ],
+        "description": "Delete an appointment by id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"

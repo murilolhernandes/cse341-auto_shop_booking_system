@@ -12,10 +12,10 @@ require("./config/passport")(passport);
 
 // Error Hangling
 const {
-  logError,
+  logErrorMiddleware,
   returnError,
   isOperationalError,
-} = require("./src/error-handling/errorHandler");
+} = require("./error-handling/errorHandler");
 
 // app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
 
@@ -58,7 +58,7 @@ app
 /* ***********************
  * Error Handling
  *************************/
-app.use(logError);
+app.use(logErrorMiddleware);
 app.use(returnError);
 
 app.get(

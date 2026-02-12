@@ -1,9 +1,9 @@
-const { body } = require('express-validator');
-const validate = require('../utilities/validate');
-const validateIdParam = require('../utilities/validateIdParam');
+const { body } = require("express-validator");
+const validate = require("./validate");
+const validateIdParam = require("./validateIdParam");
 
 const createValidationRules = [
-  body('firstName')
+  body("firstName")
     .isString()
     .withMessage("First name must be a string")
     .notEmpty()
@@ -17,40 +17,22 @@ const createValidationRules = [
     .isEmail()
     .withMessage("Must be a valid email")
     .notEmpty()
-    .withMessage("Email cannot be empty"),
-  body("phone")
-    .isMobilePhone()
-    .withMessage("Must be a valid mobile phone number")
-    .notEmpty()
-    .withMessage("Phone cannot be empty"),
-  body("dob")
-    .isDate()
-    .withMessage("Must be a valid date")
-    .notEmpty()
-    .withMessage("Phone cannot be empty"),
+    .withMessage("Email cannot be empty")
 ];
 
 const updateValidationRules = [
-  body('firstName')
+  body("firstName")
     .isString()
     .withMessage("First name must be a string")
     .optional(),
-  body('lastName')
+  body("lastName")
     .isString()
     .withMessage("Last name must be a string")
     .optional(),
   body("email")
     .isEmail()
     .withMessage("Must be a valid email")
-    .optional(),
-  body("phone")
-    .isMobilePhone()
-    .withMessage("Must be a valid mobile phone number")
-    .optional(),
-  body("dob")
-  .isDate()
-  .withMessage("Must be a valid date")
-  .optional(),
+    .optional()
 ];
 
 module.exports = {

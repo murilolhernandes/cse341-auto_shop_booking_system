@@ -2,6 +2,10 @@ const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAllUsers = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Get all users'
+  */
   try {
     const result = await mongodb.getDb().db().collection('users').find();
 
@@ -14,6 +18,10 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Get a user by id'
+  */
   try {
     if (!ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ message: 'Invalid user id' });
@@ -40,6 +48,28 @@ const getUserById = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Create a user'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "example": "Jacob"
+        },
+        "lastName": {
+          "example": "Brown"
+        },
+        "email": {
+          "example": "jacob@email.com"
+        }
+      }
+    }
+  */
   try {
     const newUser = {
       firstName: req.body.firstName,
@@ -64,6 +94,28 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Update a user by id'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "example": "Jason"
+        },
+        "lastName": {
+          "example": "Robertson"
+        },
+        "email": {
+          "example": "jason.robertson@email.com"
+        }
+      }
+    }
+  */
   try {
     if (!ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ message: 'Invalid user id' });
@@ -90,13 +142,23 @@ const updateUser = async (req, res) => {
         .json({ message: 'User not found or no changes made' });
     }
 
-    res.status(204).send();
+    res.status(200).json("User was updated successfully");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const deleteUser = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Delete a user'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    schema: { $ref: '#/definitions/User' }
+    }
+  */
   try {
     if (!ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ message: 'Invalid user id' });
@@ -113,7 +175,7 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(204).send();
+    res.status(200).json("User was removed successfully");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

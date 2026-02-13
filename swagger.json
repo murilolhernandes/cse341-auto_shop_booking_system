@@ -105,10 +105,10 @@
                   "example": "peter@email.com"
                 },
                 "phone": {
-                  "example": "034-524-3857"
+                  "example": "340-524-3857"
                 },
                 "dob": {
-                  "example": "1998/07/02"
+                  "example": "07/02/1998"
                 }
               }
             }

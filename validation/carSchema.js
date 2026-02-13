@@ -10,7 +10,11 @@ const carSchema = Joi.object({
     .min(3)
     .max(12),
 
+  year: Joi.number().min(1900).max(new Date().getFullYear()),
+
   color: Joi.string().min(2).max(30),
+
+  mileage: Joi.number().min(0).max(1000000),
 
   passengers: Joi.number().min(1).max(180),
 
@@ -21,8 +25,6 @@ const carSchema = Joi.object({
     .required(),
 
   transmission: Joi.string().valid('Manual', 'Automatic').required(),
-
-  year: Joi.number().min(1900).max(new Date().getFullYear()),
 
   clientId: Joi.string().hex().min(24).max(24).required(),
 });

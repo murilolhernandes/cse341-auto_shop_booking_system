@@ -36,7 +36,7 @@ async function findOne(req, res) {
     const result = await collection.find({ _id: id });
     const clients = await result.toArray();
 
-    if (!clients.length) return res.status(404).json("Record not found");
+    if (!clients.length) return res.status(404).json('Record not found');
 
     res.setHeader('Content-type', 'application/json');
     return res.status(200).json(clients[0]);
@@ -92,7 +92,7 @@ async function create(req, res) {
 
     if (result.acknowledged) {
       return res.status(201).json({ id: result.insertedId });
-    } else throw new Error("Failed to create new client");
+    } else throw new Error('Failed to create new client');
   } catch (error) {
     console.log(error);
     return res.status(500).json('Oops! Something went wrong');
@@ -138,12 +138,12 @@ async function update(req, res) {
     const result = await collection.updateOne({ _id: id }, updateFilter);
 
     if (result.matchedCount === 0) {
-      return res.status(404).json("Record not found");
+      return res.status(404).json('Record not found');
     }
 
     if (result.acknowledged) {
-      return res.status(200).json("Client was updated successfully");
-    } else throw new Error("Failed to update client");
+      return res.status(200).json('Client was updated successfully');
+    } else throw new Error('Failed to update client');
   } catch (error) {
     console.log(error);
     return res.status(500).json('Oops! Something went wrong');
@@ -162,12 +162,12 @@ async function remove(req, res) {
     const result = await collection.deleteOne({ _id: id });
 
     if (result.acknowledged && result.deletedCount == 0) {
-      return res.status(404).json("Record not found");
+      return res.status(404).json('Record not found');
     }
 
     if (result.deletedCount > 0) {
-      return res.status(200).json("Client was removed successfully");
-    } else throw new Error("Failed to delete client");
+      return res.status(200).json('Client was removed successfully');
+    } else throw new Error('Failed to delete client');
   } catch (error) {
     console.log(error);
     return res.status(500).json('Oops! Something went wrong');

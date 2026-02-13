@@ -33,6 +33,6 @@ router.use('/car', require('./car'));
 
 router.use('/user', require('./user'));
 
-router.use("/appointment", require("./appointment"));
+router.use('/appointment', require('./appointment'));
 
 module.exports = router;

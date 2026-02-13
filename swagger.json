@@ -5,19 +5,13 @@
     "description": "Auto Shop Booking System API",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["http", "https"],
   "paths": {
     "/client/": {
       "get": {
-        "tags": [
-          "Clients"
-        ],
+        "tags": ["Clients"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -31,33 +25,14 @@
         }
       },
       "post": {
-        "tags": [
-          "Clients"
-        ],
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "dob": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
@@ -76,9 +51,7 @@
     },
     "/client/{id}": {
       "get": {
-        "tags": [
-          "Clients"
-        ],
+        "tags": ["Clients"],
         "description": "",
         "produces": ["application/json"],
         "parameters": [
@@ -105,9 +78,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Clients"
-        ],
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
@@ -123,19 +94,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "Peter"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Hamming"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "peter@email.com"
                 },
                 "phone": {
-                  "example": "any"
+                  "example": "034-524-3857"
                 },
                 "dob": {
-                  "example": "any"
+                  "example": "1998/07/02"
                 }
               }
             }
@@ -154,9 +125,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Clients"
-        ],
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
@@ -297,7 +266,8 @@
     },
     "/user/": {
       "get": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Get all users",
         "produces": ["application/json"],
         "responses": {
           "200": {
@@ -312,24 +282,14 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Create a user",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/User"
             }
           }
         ],
@@ -348,7 +308,8 @@
     },
     "/user/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Get a user by id",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -377,7 +338,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Update a user by id",
         "parameters": [
           {
             "name": "id",
@@ -392,13 +354,13 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "Jason"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Robertson"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "jason.robertson@email.com"
                 }
               }
             }
@@ -423,7 +385,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Delete a user by id",
         "parameters": [
           {
             "name": "id",
@@ -453,13 +416,9 @@
     },
     "/appointment/": {
       "get": {
-        "tags": [
-          "Appointments"
-        ],
+        "tags": ["Appointments"],
         "description": "Find all appointments",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -473,13 +432,9 @@
         }
       },
       "post": {
-        "tags": [
-          "Appointments"
-        ],
+        "tags": ["Appointments"],
         "description": "Create an appointment",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -487,21 +442,7 @@
             "description": "Appointment information",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "698cd7c051e7d72397d7016a"
-                },
-                "clientId": {
-                  "example": "69839a8d2c2aa925aa337a77"
-                },
-                "carId": {
-                  "example": "69839a192c2aa925aa337a66"
-                },
-                "date": {
-                  "example": "02/12/2026"
-                }
-              }
+              "$ref": "#/definitions/Appointment"
             }
           }
         ],
@@ -520,13 +461,9 @@
     },
     "/appointment/{id}": {
       "get": {
-        "tags": [
-          "Appointments"
-        ],
+        "tags": ["Appointments"],
         "description": "Find an appointment by id",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -548,13 +485,9 @@
         }
       },
       "put": {
-        "tags": [
-          "Appointments"
-        ],
+        "tags": ["Appointments"],
         "description": "Update an appointment by id",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -599,13 +532,9 @@
         }
       },
       "delete": {
-        "tags": [
-          "Appointments"
-        ],
+        "tags": ["Appointments"],
         "description": "Delete an appointment by id",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -629,32 +558,65 @@
     }
   },
   "definitions": {
+    "Client": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Jacob"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Brown"
+        },
+        "email": {
+          "type": "email",
+          "example": "jacob@email.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "075-645-6352"
+        },
+        "dob": {
+          "type": "date",
+          "example": "1990/02/05"
+        }
+      }
+    },
     "Car": {
       "type": "object",
       "properties": {
         "model": {
           "type": "string",
-          "example": ""
+          "example": "Rav-4"
         },
         "brand": {
           "type": "string",
-          "example": ""
+          "example": "Toyota"
         },
         "plate": {
           "type": "string",
-          "example": ""
+          "example": "OUHB872"
+        },
+        "year": {
+          "type": "number",
+          "example": 2017
         },
         "color": {
           "type": "string",
-          "example": ""
+          "example": "Grey"
+        },
+        "mileage": {
+          "type": "number",
+          "example": 116000
         },
         "passengers": {
           "type": "number",
-          "example": 0
+          "example": 5
         },
         "doors": {
           "type": "number",
-          "example": 0
+          "example": 4
         },
         "engine_type": {
           "type": "string",
@@ -664,23 +626,49 @@
           "type": "string",
           "example": "Manual | Automatic"
         },
-        "year": {
-          "type": "number",
-          "example": 0
-        },
         "clientId": {
-          "type": "string",
-          "example": ""
+          "type": "objectId",
+          "example": "69839a8d2c2aa925aa337a77"
         }
       }
     },
     "User": {
       "type": "object",
-      "properties": {}
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Jacob"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Brown"
+        },
+        "email": {
+          "type": "email",
+          "example": "jacob@email.com"
+        }
+      }
     },
-    "Client": {
+    "Appointment": {
       "type": "object",
-      "properties": {}
+      "properties": {
+        "userId": {
+          "type": "objectId",
+          "example": "698cd7c051e7d72397d7016a"
+        },
+        "clientId": {
+          "type": "objectId",
+          "example": "69839a8d2c2aa925aa337a77"
+        },
+        "carId": {
+          "type": "objectId",
+          "example": "69839a192c2aa925aa337a66"
+        },
+        "date": {
+          "type": "date",
+          "example": "02/12/2026"
+        }
+      }
     }
   }
 }

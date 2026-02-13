@@ -1,5 +1,5 @@
 const clientController = require('../controllers/client');
-const clientValidator = require('../utilities/clientValidator');
+const clientValidator = require('../validation/clientValidator');
 const { isAuthenticated } = require('../utilities/authenticate');
 
 const router = require('express').Router();

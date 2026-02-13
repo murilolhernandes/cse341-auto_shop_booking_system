@@ -18,7 +18,7 @@ function createApp() {
     logErrorMiddleware,
     returnError,
   } = require('./error-handling/errorHandler');
-  
+
   app
     .use(bodyParser.json())
     .use(
@@ -27,11 +27,11 @@ function createApp() {
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-          mongoUrl: process.env.MONGODB_URL
+          mongoUrl: process.env.MONGODB_URL,
         }),
         cookie: {
-          maxAge: 8.5 * 60 * 60 * 1000
-        }
+          maxAge: 8.5 * 60 * 60 * 1000,
+        },
       })
     )
     .use(passport.initialize())
@@ -42,7 +42,10 @@ function createApp() {
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
       );
-      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, PATCH, OPTIONS, DELETE');
+      res.setHeader(
+        'Access-Control-Allow-Methods',
+        'POST, GET, PUT, PATCH, OPTIONS, DELETE'
+      );
       next();
     })
     .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
@@ -53,13 +56,13 @@ function createApp() {
     '/google/callback',
     passport.authenticate('google', {
       failureRedirect: '/api-docs',
-      session: true
+      session: true,
     }),
     (req, res) => {
       res.redirect('/');
     }
   );
-  
+
   /* ***********************
    * Error Handling
    *************************/

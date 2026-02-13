@@ -5,14 +5,14 @@ jest.mock('../config/passport', () => () => {});
 jest.mock('connect-mongo', () => ({
   default: {
     create: () => ({
-      on: () => {} 
-    })
-  }
+      on: () => {},
+    }),
+  },
 }));
 
 jest.mock('../utilities/authenticate', () => ({
   login: (req, res, next) => next(),
-  isAuthenticated: (req, res, next) => next()
+  isAuthenticated: (req, res, next) => next(),
 }));
 
 const mockToArray = jest.fn();
@@ -22,12 +22,11 @@ const mockDb = jest.fn(() => ({ collection: mockCollection }));
 const mockGetDb = jest.fn(() => ({ db: mockDb }));
 
 jest.mock('../db/connect', () => ({
-  getDb: () => mockGetDb()
+  getDb: () => mockGetDb(),
 }));
 
 const { createApp } = require('../server');
 const app = createApp();
-
 
 describe('Users GET endpoints', () => {
   beforeEach(() => {

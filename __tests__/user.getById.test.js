@@ -5,14 +5,14 @@ jest.mock('../config/passport', () => () => {});
 jest.mock('connect-mongo', () => ({
   default: {
     create: () => ({
-      on: () => {}
-    })
-  }
+      on: () => {},
+    }),
+  },
 }));
 
 jest.mock('../utilities/authenticate', () => ({
   login: (req, res, next) => next(),
-  isAuthenticated: (req, res, next) => next()
+  isAuthenticated: (req, res, next) => next(),
 }));
 
 const mockToArray = jest.fn();
@@ -22,12 +22,11 @@ const mockDb = jest.fn(() => ({ collection: mockCollection }));
 const mockGetDb = jest.fn(() => ({ db: mockDb }));
 
 jest.mock('../db/connect', () => ({
-  getDb: () => mockGetDb()
+  getDb: () => mockGetDb(),
 }));
 
 const { createApp } = require('../server');
 const app = createApp();
-
 
 describe('Users GET /user/:id', () => {
   beforeEach(() => {
@@ -41,7 +40,7 @@ describe('Users GET /user/:id', () => {
   });
 
   test('GET /user/:id returns 404 when user not found', async () => {
-    mockToArray.mockResolvedValueOnce([]); 
+    mockToArray.mockResolvedValueOnce([]);
 
     const res = await request(app).get('/user/507f1f77bcf86cd799439011');
 

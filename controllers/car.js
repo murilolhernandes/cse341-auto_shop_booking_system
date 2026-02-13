@@ -1,5 +1,5 @@
 const ObjectId = require('mongodb').ObjectId;
-const { carSchema } = require('./../validation/carSchema');
+const { carSchema } = require('../validation/carSchema');
 const Api400Error = require('../error-handling/api400Error');
 const Api404Error = require('../error-handling/api404Error');
 const { getDb } = require('../db/connect');
@@ -34,7 +34,7 @@ const getById = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error('Invalid user id');
+      throw new Api400Error('Invalid car id');
     }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();
@@ -65,12 +65,26 @@ const createCar = async (req, res, next) => {
   */
   try {
     const validateResult = await carSchema.validateAsync(req.body);
+
+    if (validateResult.clientId) {
+      if (!ObjectId.isValid(validateResult.clientId)) {
+        return res.status(400).json('Invalid Client ID format');
+      }
+      const clientId = new ObjectId(validateResult.clientId);
+      const clientExists = await getDb()
+        .db()
+        .collection('clients')
+        .findOne({ _id: clientId });
+      if (!clientExists) return res.status(404).json('Client not found');
+      validateResult.clientId = clientId;
+    }
+
     const collection = await getDbCollection();
     const result = await collection.insertOne(validateResult);
 
     if (result.acknowledged) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(201).json(result.insertedId);
+      res.status(201).json({ id: result.insertedId });
     } else {
       throw new Error('Failed to create car');
     }
@@ -96,10 +110,24 @@ const updateCar = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error('Invalid user id');
+      throw new Api400Error('Invalid car id');
     }
     const carId = new ObjectId(req.params.id);
     const validateResult = await carSchema.validateAsync(req.body);
+
+    if (validateResult.clientId) {
+      if (!ObjectId.isValid(validateResult.clientId)) {
+        return res.status(400).json('Invalid Client ID format');
+      }
+      const clientId = new ObjectId(validateResult.clientId);
+      const clientExists = await getDb()
+        .db()
+        .collection('clients')
+        .findOne({ _id: clientId });
+      if (!clientExists) return res.status(404).json('Client not found');
+      validateResult.clientId = clientId;
+    }
+
     const collection = await getDbCollection();
     const result = await collection.updateOne(
       { _id: carId },
@@ -129,7 +157,7 @@ const deleteCar = async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error('Invalid user id');
+      throw new Api400Error('Invalid car id');
     }
     const carId = new ObjectId(req.params.id);
     const collection = await getDbCollection();

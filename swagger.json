@@ -53,7 +53,9 @@
       "get": {
         "tags": ["Clients"],
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -153,9 +155,13 @@
     },
     "/car/": {
       "get": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Get all cars",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -166,9 +172,13 @@
         }
       },
       "post": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Create a new car",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -192,9 +202,13 @@
     },
     "/car/{id}": {
       "get": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Get a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -213,9 +227,13 @@
         }
       },
       "put": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Update a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -243,9 +261,13 @@
         }
       },
       "delete": {
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "description": "Delete a car by id",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",

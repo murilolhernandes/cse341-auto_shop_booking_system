@@ -597,11 +597,11 @@
         },
         "phone": {
           "type": "string",
-          "example": "075-645-6352"
+          "example": "756-456-0352"
         },
         "dob": {
           "type": "date",
-          "example": "1990/02/05"
+          "example": "02/05/1990"
         }
       }
     },

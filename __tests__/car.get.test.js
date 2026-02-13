@@ -28,23 +28,25 @@ jest.mock('../db/connect', () => ({
 const { createApp } = require('../server');
 const app = createApp();
 
-describe('Users GET /user/:id', () => {
+describe('Cars GET endpoints', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('GET /user/:id returns 400 for invalid id', async () => {
-    const res = await request(app).get('/user/not-a-valid-objectid');
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty('errors');
+  test('GET /car returns 200 and an array', async () => {
+    mockToArray.mockResolvedValueOnce([{ firstName: 'Test' }]);
+
+    const res = await request(app).get('/car');
+
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
   });
 
-  test('GET /user/:id returns 404 when user not found', async () => {
-    mockToArray.mockResolvedValueOnce([]);
+  test('GET /car returns 500 if DB throws', async () => {
+    mockToArray.mockRejectedValueOnce(new Error('DB fail'));
 
-    const res = await request(app).get('/user/698f6f8e26ad235e19a2f8a8');
+    const res = await request(app).get('/car');
 
-    expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty('message');
+    expect(res.status).toBe(500);
   });
 });

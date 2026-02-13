@@ -18,10 +18,9 @@ const getAll = async (req, res, next) => {
   try {
     const collection = await getDbCollection();
     const result = await collection.find({});
-    result.toArray().then((cars) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(cars);
-    });
+    const cars = await result.toArray();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(cars);
   } catch (err) {
     next(err);
   }

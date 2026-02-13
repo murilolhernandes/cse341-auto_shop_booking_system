@@ -28,23 +28,23 @@ jest.mock('../db/connect', () => ({
 const { createApp } = require('../server');
 const app = createApp();
 
-describe('Users GET /user/:id', () => {
+describe('Clients GET /client/:id', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('GET /user/:id returns 400 for invalid id', async () => {
-    const res = await request(app).get('/user/not-a-valid-objectid');
+  test('GET /client/:id returns 400 for invalid id', async () => {
+    const res = await request(app).get('/client/not-a-valid-objectid');
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty('errors');
   });
 
-  test('GET /user/:id returns 404 when user not found', async () => {
+  test('GET /client/:id returns 404 when user not found', async () => {
     mockToArray.mockResolvedValueOnce([]);
 
-    const res = await request(app).get('/user/698f6f8e26ad235e19a2f8a8');
+    const res = await request(app).get('/client/698f70cf0432ef2b7738f490');
 
     expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty('message');
+    expect(res.body).toBe('Record not found');
   });
 });

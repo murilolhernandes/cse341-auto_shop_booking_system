@@ -49,18 +49,4 @@ describe('Client GET endpoints', () => {
 
     expect(res.status).toBe(500);
   });
-
-  test('GET /client/:id returns 404 when not found', async () => {
-    mockToArray.mockResolvedValueOnce([]);
-
-    const res = await request(app).get('/client/507f1f77bcf86cd799439011');
-
-    expect(res.status).toBe(404);
-  });
-
-  test('GET /client/:id returns 400 for invalid id', async () => {
-    const res = await request(app).get('/client/not-valid-id');
-
-    expect(res.status).toBe(400);
-  });
 });

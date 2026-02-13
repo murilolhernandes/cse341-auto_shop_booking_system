@@ -1,21 +1,27 @@
-const passport = require('passport');
+const passport = require("passport");
+//Using api401Error for consistency in error handling.
+const Api401Error = require("../error-handling/api400Error");
 
 const login = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    return passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+    return passport.authenticate("google", { scope: ["profile", "email"] })(
+      req,
+      res,
+      next,
+    );
   }
-  res.redirect('/');
-}
+  res.redirect("/");
+};
 
 const isAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    return res.status(401).json("You do not have access.");
-    
+    throw new Api401Error("Unauthorized", "You do not have access.");
+    //return res.status(401).json("You do not have access.");
   }
   next();
-}
+};
 
 module.exports = {
   login,
-  isAuthenticated
+  isAuthenticated,
 };

@@ -15,8 +15,14 @@ async function findAll(req, res) {
     res.setHeader("Content-type", "application/json");
     return res.status(200).json(clients);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json("Oops! Something went wrong");
+    // Throwing custom errors.
+    throw new Api500Error(
+      "Retrieving clients failed",
+      undefined,
+      `Failed to retrieve clients, ${error.message}`, 
+    )
+    //console.log(error);
+    //return res.status(500).json("Oops! Something went wrong");
   }
 }
 
@@ -33,8 +39,15 @@ async function findOne(req, res) {
     res.setHeader("Content-type", "application/json");
     return res.status(200).json(clients[0]);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json("Oops! Something went wrong");
+    // Throwing custom errors.
+    throw new Api500Error(
+      "Retrieving client failed",
+      undefined,
+      `Failed to retrieve client with id ${req.params.id}, ${error.message}`,
+    );
+
+    //console.log(error);
+    //return res.status(500).json("Oops! Something went wrong");
   }
 }
 
@@ -52,14 +65,21 @@ async function create(req, res) {
   const collection = await getDbCollection();
 
   try {
-    result = await collection.insertOne(data);
+    const result = await collection.insertOne(data);
 
     if (result.acknowledged) {
       return res.status(201).json({ id: result.insertedId });
     } else throw new Error("failed to create new client");
   } catch (error) {
-    console.log(error);
-    return res.status(500).json("Oops! Something went wrong");
+
+    // Throwing custom errors.
+    throw new Api500Error(
+      "Client Creation Failed",
+      undefined,
+      `Error occurred while creating a new client, ${error.message}`,
+    );
+    //console.log(error);
+    //return res.status(500).json("Oops! Something went wrong");
   }
 }
 
@@ -78,9 +98,17 @@ async function update(req, res) {
     if (result.acknowledged) {
       return res.sendStatus(204);
     } else throw new Error("failed to update client");
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json("Oops! Something went wrong");
+  } catch (error) 
+  {
+    // Throwing custom errors.
+    throw new Api500Error(
+      "Client Update Failed",
+      undefined,
+      `Error occurred while updating client with id ${req.params.id}, ${error.message}`,
+    );
+
+    //console.log(error);
+    //return res.status(500).json("Oops! Something went wrong");
   }
 }
 async function remove(req, res) {
@@ -98,8 +126,16 @@ async function remove(req, res) {
       return res.sendStatus(204);
     } else throw new Error("failed to delete client");
   } catch (error) {
-    console.log(error);
-    return res.status(500).json("Oops! Something went wrong");
+    // Throwing custom errors.
+
+    throw new Api500Error(
+      "Client Deletion Failed",
+      undefined,
+      `Error occurred while deleting client with id ${req.params.id}, ${error.message}`,
+    );
+
+    //console.log(error);
+    //return res.status(500).json("Oops! Something went wrong");
   }
 }
 

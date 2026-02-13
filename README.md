@@ -9,6 +9,7 @@ Our API will allow users to manage car service’s appointments by setting an ap
 ### **.ENV**
 
 #### Please add a dotenv file and add the following lines:
+
 ```
 PORT=3000
 MONGODB_URL="we will add the MondoDB URL link later"
@@ -17,9 +18,11 @@ GOOGLE_CLIENT_SECRET="we will add the Google Client Secret later"
 CALLBACK_URL="we will add the Callback URL link later"
 CALLBACK_URL_DEV="http://localhost:3000/google/callback" (Only to be used during development)
 ```
+
 ### **Dependencies**
 
 #### Please run the following commands in your terminal, so we all can work with the same libraries (Please remember to add more commands here if you install something else in your computer, and make a note showing what is new):
+
 ```
 npm i express
 npm i express-session
@@ -35,7 +38,9 @@ npm i passport
 npm i passport-google-oauth20
 npm i cors
 ```
+
 #### **-- New ones below this comment and inside the triple backticks--**
+
 ```
 npm i connect-mongo - (Improves the memory by storing the user's loggin state to the database)
 ```

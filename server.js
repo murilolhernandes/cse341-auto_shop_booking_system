@@ -1,56 +1,79 @@
-const express = require('express');
-const mongodb = require('./db/connect');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const session = require('express-session');
-const cors = require('cors');
-const MongoStore = require('connect-mongo').default;
+const express = require("express");
+const mongodb = require("./db/connect");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const session = require("express-session");
+const cors = require("cors");
+const MongoStore = require("connect-mongo").default;
 
 const port = process.env.PORT || 3000;
 const app = express();
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 // app.set('trust proxy', 1); // For Express to understand that Render is a secured proxy
 
 // Setup the server to accept bodyParser (to parse the data from the DB), passport (validate the user through Google OAuth2.0), and set the API headers.
 app
   .use(bodyParser.json())
-  .use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URL,
+  .use(
+    session({
+      secret: "secret",
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URL,
+      }),
+      cookie: {
+        // secure: true, // For Render (HTTPS)
+        // httpOnly: true, // Prevents client-side JS from reading the cookie
+        maxAge: 8.5 * 60 * 60 * 1000, // Session will expire in 8 hours (a normal work day)
+      },
     }),
-    cookie: {
-      // secure: true, // For Render (HTTPS)
-      // httpOnly: true, // Prevents client-side JS from reading the cookie
-      maxAge: 8.5 * 60 * 60 * 1000 // Session will expire in 8 hours (a normal work day)
-    }
-  }))
+  )
   .use(passport.initialize())
   .use(passport.session())
   .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization'
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization",
     );
     res.setHeader(
-      'Access-Control-Allow-Methods',
-      'POST, GET, PUT, PATCH, OPTIONS, DELETE'
+      "Access-Control-Allow-Methods",
+      "POST, GET, PUT, PATCH, OPTIONS, DELETE",
     );
     next();
   })
-  .use(cors({ methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }))
-  .use(cors({ origin: '*' }))
-  .use('/', require('./routes/'));
+  .use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }))
+  .use(cors({ origin: "*" }))
+  .use("/", require("./routes/"))
+  .use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.description || err.message || "Internal Server Error";
 
-app.get('/google/callback', passport.authenticate('google', {
-  failureRedirect: '/api-docs', session: true}),
-  (req, res) => {
-    res.redirect('/');
+    res.status(statusCode).json({
+      error: err.name || "Error",
+      message,
+    });
   });
+
+app.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  }),
+);
+
+app.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/api-docs",
+    session: true,
+  }),
+  (req, res) => {
+    res.redirect("/");
+  },
+);
 
 mongodb.initDb((err) => {
   if (err) {

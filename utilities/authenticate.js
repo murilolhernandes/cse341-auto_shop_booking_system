@@ -16,7 +16,7 @@ const login = (req, res, next) => {
 
 const isAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    throw new Api401Error('Unauthorized', undefined, 'You do not have access.');
+    throw new Api401Error('Unauthorized', 401, 'You do not have access.');
   }
   next();
 };

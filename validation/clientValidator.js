@@ -44,7 +44,10 @@ const updateValidationRules = [
     .isMobilePhone('en-US')
     .withMessage('Must be a valid mobile phone number')
     .optional(),
-  body('dob').isDate({ format: 'MM/DD/YYYY', strictMode: true }).withMessage('Date of birth must be in MM/DD/YYYY format').optional(),
+  body('dob')
+    .isDate({ format: 'MM/DD/YYYY', strictMode: true })
+    .withMessage('Date of birth must be in MM/DD/YYYY format')
+    .optional(),
 ];
 
 module.exports = {

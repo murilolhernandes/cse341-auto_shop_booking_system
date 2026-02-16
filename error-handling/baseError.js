@@ -3,9 +3,11 @@ class BaseError extends Error {
     super(description);
 
     Object.setPrototypeOf(this, new.target.prototype);
+
     this.name = name;
     this.statusCode = statusCode;
     this.isOperational = isOperational;
+    this.description = description;
     Error.captureStackTrace(this);
   }
 }

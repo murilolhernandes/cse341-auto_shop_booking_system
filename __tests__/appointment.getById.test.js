@@ -45,6 +45,10 @@ describe('Appointments GET /appointment/:id', () => {
     const res = await request(app).get('/appointment/698f6ffd26ad235e19a2f8a9');
 
     expect(res.status).toBe(404);
-    expect(res.body).toBe('Record not found');
+    expect(res.body).toStrictEqual({
+      error: 'Appointment was not found',
+      message:
+        'Error occurred while searching appointment with ID 698f6ffd26ad235e19a2f8a9.',
+    });
   });
 });

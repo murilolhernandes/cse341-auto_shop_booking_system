@@ -6,7 +6,6 @@ function validate(req, res, next) {
     const errorsExtract = errors
       .array()
       .map((item) => ({ [item.path]: item.msg }));
-
     return res.status(400).json({ errors: errorsExtract });
   }
   next();

@@ -2,18 +2,18 @@ const swaggerAutogen = require('swagger-autogen')();
 const car = require('./models/car');
 const user = require('./models/user');
 const client = require('./models/client');
+const appointment = require('./models/appointment');
 // We cannot forget to manually change the swagger.json to the Render's URL and the schemes to 'https' when testing on the website.
 const doc = {
   info: {
     title: 'Auto Shop Booking System API',
     description: 'Auto Shop Booking System API',
   },
-  host: 'cse341-auto-shop-booking-system.onrender.com',
-  schemes: ['http', 'https'],
   definitions: {
+    Client: client,
     Car: car,
     User: user,
-    Client: client,
+    Appointment: appointment,
   },
 };
 

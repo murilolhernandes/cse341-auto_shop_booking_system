@@ -21,28 +21,38 @@ CALLBACK_URL_DEV="http://localhost:3000/google/callback" (Only to be used during
 
 ### **Dependencies**
 
-#### Please run the following commands in your terminal, so we all can work with the same libraries (Please remember to add more commands here if you install something else in your computer, and make a note showing what is new):
+#### Please run the following command in your terminal, so we all can work with the same libraries (please remember to always run this command to install new libraries added by other contributors, after you pull):
 
 ```
 npm i
 ```
 
-#### **-- New ones below this comment and inside the triple backticks--**
-
-```
-npm i connect-mongo - (Improves the memory by storing the user's loggin state to the database)
-```
-
-
+## **Useful commands to run**
 
 ### Run Unit Tests
 
-### This project uses Jest and Supertest for API testing.
+#### This project uses Jest and Supertest for API testing.
 
-### Run all tests:
+#### Run all tests:
 
+```
 npm test
+```
 
-### Run tests in watch mode:
+#### Run tests in watch mode:
 
+```
 npm run test:watch
+```
+
+#### Run ESLint
+
+```
+npm run lint
+```
+
+#### Run Prettierr
+
+```
+npm run format
+```

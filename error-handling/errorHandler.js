@@ -11,8 +11,8 @@ function logErrorMiddleware(err, req, res, next) {
 
 function returnError(err, req, res, next) {
   res.status(err.statusCode || 500).json({
-    error: err.name || "Error",
-    message: err.message || "Something went wrong",
+    error: err.name || 'Error',
+    message: err.message || 'Something went wrong',
   });
 }
 

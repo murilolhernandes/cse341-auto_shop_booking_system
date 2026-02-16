@@ -1,5 +1,5 @@
 const ObjectId = require('mongodb').ObjectId;
-const { carSchema } = require('./../validation/carSchema');
+const { carSchema } = require('../validation/carSchema');
 const Api400Error = require('../error-handling/api400Error');
 const Api404Error = require('../error-handling/api404Error');
 const Api500Error = require('../error-handling/api500Error');
@@ -22,10 +22,9 @@ const getAll = AsyncWrapper.wrapAsync(async (req, res, next) => {
   try {
     const collection = await getDbCollection();
     const result = await collection.find({});
-    result.toArray().then((cars) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(cars);
-    });
+    const cars = await result.toArray();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(cars);
   } catch (err) {
     next(err);
   }
@@ -42,7 +41,7 @@ const getById = AsyncWrapper.wrapAsync(async (req, res, next) => {
       throw new Api400Error(
         'Invalid Car ID Format',
         undefined,
-        `The provided car id ${req.params.id} is not a valid Id format.`
+        `The provided car ID ${req.params.id} is not a valid ID format.`
       );
     }
     const carId = new ObjectId(req.params.id);
@@ -53,9 +52,9 @@ const getById = AsyncWrapper.wrapAsync(async (req, res, next) => {
 
     if (cars.length === 0) {
       throw new Api404Error(
-        'Invalid Car ID',
+        'Car was not found',
         undefined,
-        `The provided car id ${req.params.id} is not a valid Id.`
+        `Error occurred while searching car with ID ${req.params.id}.`
       );
     }
     res.setHeader('Content-Type', 'application/json');
@@ -97,14 +96,13 @@ const createCar = AsyncWrapper.wrapAsync(async (req, res, next) => {
 
     if (result.acknowledged) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(201).json(result.insertedId);
+      res.status(201).json({ id: result.insertedId });
     } else {
       throw new Api500Error(
         'Car Creation Failed',
         undefined,
         'Failed to create a new car.'
       );
-      //res.status(500).json({ message: 'Failed to create a new car' });
     }
   } catch (err) {
     if (err.isJoi) {
@@ -128,7 +126,7 @@ const updateCar = AsyncWrapper.wrapAsync(async (req, res, next) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api400Error('Invalid car id');
+      throw new Api400Error('Invalid car ID');
     }
     const carId = new ObjectId(req.params.id);
     const validateResult = await carSchema.validateAsync(req.body);
@@ -158,13 +156,13 @@ const updateCar = AsyncWrapper.wrapAsync(async (req, res, next) => {
       throw new Api404Error(
         'Car was not found',
         undefined,
-        `Error occurred while searching car with id ${req.params.id}, ${err.message}`
+        `Error occurred while searching car with ID ${req.params.id}`
       );
     } else {
       throw new Api400Error(
         'Car Update Failed',
         undefined,
-        `Error occurred while updating car with id ${req.params.id}, ${err.message}`
+        `Error occurred while updating car with ID ${req.params.id}`
       );
     }
   } catch (err) {
@@ -187,7 +185,7 @@ const deleteCar = AsyncWrapper.wrapAsync(async (req, res, next) => {
       throw new Api400Error(
         'Invalid Car ID Format',
         undefined,
-        `The provided car id ${req.params.id} is not a valid Id format.`
+        `The provided car ID ${req.params.id} is not a valid ID format.`
       );
     }
     const carId = new ObjectId(req.params.id);
@@ -200,7 +198,7 @@ const deleteCar = AsyncWrapper.wrapAsync(async (req, res, next) => {
       throw new Api404Error(
         'Invalid Car ID',
         undefined,
-        `The provided car id ${req.params.id} is not a valid Id.`
+        `The provided car ID ${req.params.id} is not a valid ID.`
       );
     }
   } catch (err) {

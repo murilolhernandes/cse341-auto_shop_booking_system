@@ -1,12 +1,13 @@
 {
-  "model": "",
-  "brand": "",
-  "plate": "",
-  "color": "",
-  "passengers": 0,
-  "doors": 0,
-  "engine_type": "Gas | Diesel | Electric | Hybrid",
-  "transmission": "Manual | Automatic",
-  "year": 0,
-  "clientId": ""
+  "model": "Rav-4",
+  "brand": "Toyota",
+  "plate": "OUHB872",
+  "year": 2017,
+  "color": "Grey",
+  "mileage": 116000,
+  "passengers": 5,
+  "doors": 4,
+  "engine_type": "Gas",
+  "transmission": "Automatic",
+  "clientId": "69839a8d2c2aa925aa337a77"
 }

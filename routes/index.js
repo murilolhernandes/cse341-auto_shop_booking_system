@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const authentication = require('../utilities/authenticate');
 
-router.use("/", require("./swagger"));
+router.use('/', require('./swagger'));
 
 router.get('/', (req, res) => {
   res.send(
@@ -21,9 +21,9 @@ router.get('/logout', function (req, res, next) {
     // Remove old sessions to keep db clean
     req.session.destroy(function (err) {
       if (err) {
-        console.log("Error destroying session:", err);
+        console.log('Error destroying session:', err);
       }
-      res.redirect("/");
+      res.redirect('/');
     });
   });
 });

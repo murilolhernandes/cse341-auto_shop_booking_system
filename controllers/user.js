@@ -1,76 +1,65 @@
-const mongodb = require("../db/connect");
-const ObjectId = require("mongodb").ObjectId;
+const mongodb = require('../db/connect');
+const ObjectId = require('mongodb').ObjectId;
 
 // Requiring the Api504Error class to throw custom errors.
-const Api404Error = require("../error-handling/api404Error");
+const Api400Error = require('../error-handling/api400Error');
+const Api404Error = require('../error-handling/api404Error');
 
 // Requiring the Api500Error class to throw custom errors.
-const Api500Error = require("../error-handling/api500Error");
+const Api500Error = require('../error-handling/api500Error');
 
 // Requiring the AsyncWrapper to wrap all the controller functions.
-const AsyncWrapper = require("../error-handling/AsyncWrapper");
+const AsyncWrapper = require('../error-handling/AsyncWrapper');
 
 // Installing async wrapper to al the controllers.
-const getAllUsers = AsyncWrapper.wrapAsync(async (req, res) => {
+const getAllUsers = AsyncWrapper.wrapAsync(async (req, res, next) => {
   try {
-    const result = await mongodb.getDb().db().collection("users").find();
+    const result = await mongodb.getDb().db().collection('users').find();
 
     const users = await result.toArray();
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader('Content-Type', 'application/json');
     res.status(200).json(users);
   } catch (err) {
-    //Throwing custom errors.
-
-    throw new Api500Error(
-      "Retrieving users failed",
-      undefined,
-      `Failed to retrieve users ${err.message}`,
-    );
-
-    //res.status(500).json({ message: err.message });
+    next(err);
   }
 });
 
 // Installing async wrapper to al the controllers.
-const getUserById = AsyncWrapper.wrapAsync(async (req, res) => {
+const getUserById = AsyncWrapper.wrapAsync(async (req, res, next) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api404Error(
-        "Invalid User ID",
+      throw new Api400Error(
+        'Invalid User ID Format',
         undefined,
-        `The provided user id ${req.params.id} is not a valid Id.`,
+        `The provided user ID ${req.params.id} is not a valid ID format.`
       );
-      //return res.status(400).json({ message: 'Invalid user id' });
     }
 
     const userId = new ObjectId(req.params.id);
     const result = await mongodb
       .getDb()
       .db()
-      .collection("users")
+      .collection('users')
       .find({ _id: userId });
 
     const user = await result.toArray();
 
     if (!user[0]) {
-      return res.status(404).json({ message: "User not found" });
+      throw new Api404Error(
+        'User not found',
+        undefined,
+        `User with id ${req.params.id} not found.`
+      );
     }
 
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader('Content-Type', 'application/json');
     res.status(200).json(user[0]);
   } catch (err) {
-    throw new Api500Error(
-      "Retrieving user failed",
-      undefined,
-      `Failed to retrieve user with id ${req.params.id}, ${err.message}`,
-    );
-
-    //res.status(500).json({ message: err.message });
+    next(err);
   }
 });
-    //Throwing custom errors.
 
-const createUser = async (req, res) => {
+const createUser = AsyncWrapper.wrapAsync(async (req, res, next) => {
   /*
    #swagger.tags = ['Users']
    #swagger.description = 'Create a user'
@@ -78,20 +67,8 @@ const createUser = async (req, res) => {
     in: 'body',
     description: 'User information',
     required: true,
-    "schema": {
-      "type": "object",
-      "properties": {
-        "firstName": {
-          "example": "Jacob"
-        },
-        "lastName": {
-          "example": "Brown"
-        },
-        "email": {
-          "example": "jacob@email.com"
-        }
-      }
-    }
+    schema: { $ref: '#/definitions/User' }
+   }
   */
   try {
     const newUser = {
@@ -108,26 +85,17 @@ const createUser = async (req, res) => {
       return res.status(201).json({ id: response.insertedId });
     } else {
       throw new Api500Error(
-        "User Creation Failed",
+        'User Creation Failed',
         undefined,
-        "Failed to create a new user.",
+        'Failed to create a new user.'
       );
-      //res.status(500).json({ message: 'Failed to create a new user' });
     }
   } catch (err) {
-    //Throwing custom errors.
-    throw new Api500Error(
-      "User Creation Failed",
-      undefined,
-      `Error occurred while creating a new user, ${err.message}`,
-    );
-        //res.status(500).json({ message: err.message });
+    next(err);
   }
-};
+});
 
-
-
-const updateUser = async (req, res) => {
+const updateUser = AsyncWrapper.wrapAsync(async (req, res, next) => {
   /*
    #swagger.tags = ['Users']
    #swagger.description = 'Update a user by id'
@@ -152,12 +120,11 @@ const updateUser = async (req, res) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api404Error(
-        "Invalid User ID",
+      throw new Api400Error(
+        'Invalid User ID Format',
         undefined,
-        `The provided user id ${req.params.id} is not a valid Id.`,
+        `The provided user ID ${req.params.id} is not a valid ID format.`
       );
-      //return res.status(400).json({ message: 'Invalid user id' });
     }
 
     const userId = new ObjectId(req.params.id);
@@ -172,32 +139,34 @@ const updateUser = async (req, res) => {
     const response = await mongodb
       .getDb()
       .db()
-      .collection("users")
+      .collection('users')
       .updateOne({ _id: userId }, user);
 
-    if (response.modifiedCount === 0) {
-      return res
-        .status(404)
-        .json({ message: 'User not found or no changes made' });
+    if (response.matchedCount === 0) {
+      throw new Api404Error(
+        'User not found',
+        undefined,
+        `User with id ${req.params.id} not found.`
+      );
     }
 
-    res.status(200).json('User was updated successfully');
+    if (response.acknowledged) {
+      res.status(200).json('User was updated successfully');
+    } else {
+      throw new Api500Error(
+        'User Update Failed',
+        undefined,
+        `Error occurred while updating user with id ${req.params.id}`
+      );
+    }
   } catch (err) {
-    //Throwing custom errors.
-
-    throw new Api500Error(
-      "User Update Failed",
-      undefined,
-      `Error occurred while updating user with id ${req.params.id}, ${err.message}`,
-    );
-
-    //res.status(500).json({ message: err.message });
+    next(err);
   }
-};
+});
 
 // Installing async wrapper to al the controllers.
-const deleteUser = AsyncWrapper.wrapAsync(async (req, res) => {
-    /*
+const deleteUser = AsyncWrapper.wrapAsync(async (req, res, next) => {
+  /*
    #swagger.tags = ['Users']
    #swagger.description = 'Delete a user'
    #swagger.parameters['body'] = {
@@ -209,10 +178,10 @@ const deleteUser = AsyncWrapper.wrapAsync(async (req, res) => {
   */
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      throw new Api404Error(
-        "Invalid User ID",
+      throw new Api400Error(
+        'Invalid User ID Format',
         undefined,
-        `The provided user id ${req.params.id} is not a valid Id.`,
+        `The provided user ID ${req.params.id} is not a valid ID format.`
       );
     }
 
@@ -220,24 +189,20 @@ const deleteUser = AsyncWrapper.wrapAsync(async (req, res) => {
     const response = await mongodb
       .getDb()
       .db()
-      .collection("users")
+      .collection('users')
       .deleteOne({ _id: userId });
 
-    if (response.deletedCount === 0) {
-      return res.status(404).json({ message: "User not found" });
+    if (response.deletedCount > 0) {
+      res.status(200).json('User was removed successfully');
+    } else {
+      throw new Api404Error(
+        'User not found',
+        undefined,
+        `User with id ${req.params.id} not found.`
+      );
     }
-
-    res.status(200).json('User was removed successfully');
   } catch (err) {
-    //Throwing custom errors.
-
-    throw new Api500Error(
-      "User Deletion Failed",
-      undefined,
-      `Error occurred while deleting user with id ${req.params.id}, ${err.message}`,
-    );
-
-    //res.status(500).json({ message: err.message });
+    next(err);
   }
 });
 

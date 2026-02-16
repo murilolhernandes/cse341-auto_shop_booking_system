@@ -45,6 +45,10 @@ describe('Clients GET /client/:id', () => {
     const res = await request(app).get('/client/698f70cf0432ef2b7738f490');
 
     expect(res.status).toBe(404);
-    expect(res.body).toBe('Record not found');
+    expect(res.body).toStrictEqual({
+      error: 'Client was not found',
+      message:
+        'Error occurred while searching client with ID 698f70cf0432ef2b7738f490.',
+    });
   });
 });

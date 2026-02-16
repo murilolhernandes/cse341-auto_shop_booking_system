@@ -4,13 +4,13 @@ const Api401Error = require("../error-handling/api400Error");
 
 const login = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    return passport.authenticate("google", { scope: ["profile", "email"] })(
+    return passport.authenticate('google', { scope: ['profile', 'email'] })(
       req,
       res,
-      next,
+      next
     );
   }
-  res.redirect("/");
+  res.redirect('/');
 };
 
 const isAuthenticated = (req, res, next) => {

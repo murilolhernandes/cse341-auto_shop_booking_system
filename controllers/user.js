@@ -59,8 +59,6 @@ const getUserById = AsyncWrapper.wrapAsync(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.status(200).json(user[0]);
   } catch (err) {
-    //Throwing custom errors.
-
     throw new Api500Error(
       "Retrieving user failed",
       undefined,
@@ -70,9 +68,31 @@ const getUserById = AsyncWrapper.wrapAsync(async (req, res) => {
     //res.status(500).json({ message: err.message });
   }
 });
+    //Throwing custom errors.
 
-// Installing async wrapper to al the controllers.
-const createUser = AsyncWrapper.wrapAsync(async (req, res) => {
+const createUser = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Create a user'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "example": "Jacob"
+        },
+        "lastName": {
+          "example": "Brown"
+        },
+        "email": {
+          "example": "jacob@email.com"
+        }
+      }
+    }
+  */
   try {
     const newUser = {
       firstName: req.body.firstName,
@@ -82,7 +102,7 @@ const createUser = AsyncWrapper.wrapAsync(async (req, res) => {
     const response = await mongodb
       .getDb()
       .db()
-      .collection("users")
+      .collection('users')
       .insertOne(newUser);
     if (response.acknowledged) {
       return res.status(201).json({ id: response.insertedId });
@@ -101,13 +121,35 @@ const createUser = AsyncWrapper.wrapAsync(async (req, res) => {
       undefined,
       `Error occurred while creating a new user, ${err.message}`,
     );
-
-    //res.status(500).json({ message: err.message });
+        //res.status(500).json({ message: err.message });
   }
-});
+};
 
-// Installing async wrapper to al the controllers.
-const updateUser = AsyncWrapper.wrapAsync(async (req, res) => {
+
+
+const updateUser = async (req, res) => {
+  /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Update a user by id'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "example": "Jason"
+        },
+        "lastName": {
+          "example": "Robertson"
+        },
+        "email": {
+          "example": "jason.robertson@email.com"
+        }
+      }
+    }
+  */
   try {
     if (!ObjectId.isValid(req.params.id)) {
       throw new Api404Error(
@@ -136,10 +178,10 @@ const updateUser = AsyncWrapper.wrapAsync(async (req, res) => {
     if (response.modifiedCount === 0) {
       return res
         .status(404)
-        .json({ message: "User not found or no changes made" });
+        .json({ message: 'User not found or no changes made' });
     }
 
-    res.status(204).send();
+    res.status(200).json('User was updated successfully');
   } catch (err) {
     //Throwing custom errors.
 
@@ -151,10 +193,20 @@ const updateUser = AsyncWrapper.wrapAsync(async (req, res) => {
 
     //res.status(500).json({ message: err.message });
   }
-});
+};
 
 // Installing async wrapper to al the controllers.
 const deleteUser = AsyncWrapper.wrapAsync(async (req, res) => {
+    /*
+   #swagger.tags = ['Users']
+   #swagger.description = 'Delete a user'
+   #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'User information',
+    required: true,
+    schema: { $ref: '#/definitions/User' }
+    }
+  */
   try {
     if (!ObjectId.isValid(req.params.id)) {
       throw new Api404Error(
@@ -175,7 +227,7 @@ const deleteUser = AsyncWrapper.wrapAsync(async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(204).send();
+    res.status(200).json('User was removed successfully');
   } catch (err) {
     //Throwing custom errors.
 

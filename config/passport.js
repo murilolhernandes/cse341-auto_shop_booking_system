@@ -1,6 +1,6 @@
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const mongodb = require("../db/connect");
-const ObjectId = require("mongodb").ObjectId;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const mongodb = require('../db/connect');
+const ObjectId = require('mongodb').ObjectId;
 
 // Setup the passport authentication using Google OAuth2.0
 module.exports = function (passport) {
@@ -16,20 +16,20 @@ module.exports = function (passport) {
           const db = mongodb.getDb().db();
 
           let user = await db
-            .collection("users")
+            .collection('users')
             .findOne({ email: profile.emails[0].value });
 
           if (user) {
             if (!user.googleId) {
               user.googleId = profile.id;
               await db
-                .collection("users")
+                .collection('users')
                 .updateOne(
                   { _id: user._id },
-                  { $set: { googleId: profile.id } },
+                  { $set: { googleId: profile.id } }
                 );
               user.googleId = profile.id;
-              console.log("Linked Google account to existing local user.");
+              console.log('Linked Google account to existing local user.');
             }
             return done(null, user);
           } else {
@@ -39,7 +39,7 @@ module.exports = function (passport) {
               lastName: profile.name.familyName,
               email: profile.emails[0].value,
             };
-            const result = await db.collection("users").insertOne(newUser);
+            const result = await db.collection('users').insertOne(newUser);
             newUser._id = result.insertedId;
             return done(null, newUser);
           }
@@ -47,8 +47,8 @@ module.exports = function (passport) {
           console.error(err);
           return done(err, null);
         }
-      },
-    ),
+      }
+    )
   );
 
   passport.serializeUser((user, done) => {
@@ -59,7 +59,7 @@ module.exports = function (passport) {
     try {
       const db = mongodb.getDb().db();
       const user = await db
-        .collection("users")
+        .collection('users')
         .findOne({ _id: new ObjectId(id) });
       done(null, user);
     } catch (err) {

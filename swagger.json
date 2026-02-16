@@ -12,52 +12,11 @@
     "https"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/login": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/client/": {
       "get": {
+        "tags": ["Clients"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -71,30 +30,14 @@
         }
       },
       "post": {
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "dob": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Client"
             }
           }
         ],
@@ -113,6 +56,7 @@
     },
     "/client/{id}": {
       "get": {
+        "tags": ["Clients"],
         "description": "",
         "produces": [
           "application/json"
@@ -141,6 +85,7 @@
         }
       },
       "put": {
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
@@ -156,19 +101,19 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "Peter"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Hamming"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "peter@email.com"
                 },
                 "phone": {
-                  "example": "any"
+                  "example": "340-524-3857"
                 },
                 "dob": {
-                  "example": "any"
+                  "example": "07/02/1998"
                 }
               }
             }
@@ -187,6 +132,7 @@
         }
       },
       "delete": {
+        "tags": ["Clients"],
         "description": "",
         "parameters": [
           {
@@ -347,10 +293,9 @@
     },
     "/user/": {
       "get": {
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["Users"],
+        "description": "Get all users",
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -364,24 +309,14 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Create a user",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/User"
             }
           }
         ],
@@ -400,10 +335,9 @@
     },
     "/user/{id}": {
       "get": {
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["Users"],
+        "description": "Get a user by id",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -431,7 +365,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Update a user by id",
         "parameters": [
           {
             "name": "id",
@@ -477,7 +412,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Delete a user by id",
         "parameters": [
           {
             "name": "id",
@@ -502,6 +438,262 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    },
+    "/appointment/": {
+      "get": {
+        "tags": ["Appointments"],
+        "description": "Find all appointments",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Appointments"],
+        "description": "Create an appointment",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Appointment information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Appointment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/appointment/{id}": {
+      "get": {
+        "tags": ["Appointments"],
+        "description": "Find an appointment by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Appointments"],
+        "description": "Update an appointment by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Appointment information",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "698cd47d51e7d72397d70169"
+                },
+                "clientId": {
+                  "example": "69839a8d2c2aa925aa337a79"
+                },
+                "carId": {
+                  "example": "69839a192c2aa925aa337a67"
+                },
+                "date": {
+                  "example": "02/13/2026"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Appointments"],
+        "description": "Delete an appointment by id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Client": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Jacob"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Brown"
+        },
+        "email": {
+          "type": "email",
+          "example": "jacob@email.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "756-456-0352"
+        },
+        "dob": {
+          "type": "date",
+          "example": "02/05/1990"
+        }
+      }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "example": "Rav-4"
+        },
+        "brand": {
+          "type": "string",
+          "example": "Toyota"
+        },
+        "plate": {
+          "type": "string",
+          "example": "OUHB872"
+        },
+        "year": {
+          "type": "number",
+          "example": 2017
+        },
+        "color": {
+          "type": "string",
+          "example": "Grey"
+        },
+        "mileage": {
+          "type": "number",
+          "example": 116000
+        },
+        "passengers": {
+          "type": "number",
+          "example": 5
+        },
+        "doors": {
+          "type": "number",
+          "example": 4
+        },
+        "engine_type": {
+          "type": "string",
+          "example": "Gas | Diesel | Electric | Hybrid"
+        },
+        "transmission": {
+          "type": "string",
+          "example": "Manual | Automatic"
+        },
+        "clientId": {
+          "type": "objectId",
+          "example": "69839a8d2c2aa925aa337a77"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Jacob"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Brown"
+        },
+        "email": {
+          "type": "email",
+          "example": "jacob@email.com"
+        }
+      }
+    },
+    "Appointment": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "objectId",
+          "example": "698cd7c051e7d72397d7016a"
+        },
+        "clientId": {
+          "type": "objectId",
+          "example": "69839a8d2c2aa925aa337a77"
+        },
+        "carId": {
+          "type": "objectId",
+          "example": "69839a192c2aa925aa337a66"
+        },
+        "date": {
+          "type": "date",
+          "example": "02/12/2026"
         }
       }
     }

@@ -1,4 +1,4 @@
-const BaseError = require("./baseError");
+const BaseError = require('./baseError');
 
 function logError(err) {
   console.log(err);

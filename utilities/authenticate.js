@@ -13,6 +13,12 @@ const login = (req, res, next) => {
   }
   res.redirect('/');
 };
+const loginGH = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return passport.authenticate('github')(req, res, next);
+  }
+  res.redirect('/');
+};
 
 const isAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -24,4 +30,5 @@ const isAuthenticated = (req, res, next) => {
 module.exports = {
   login,
   isAuthenticated,
+  loginGH,
 };

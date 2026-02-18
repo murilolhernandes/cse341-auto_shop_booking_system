@@ -9,6 +9,7 @@ function logErrorMiddleware(err, req, res, next) {
   next(err);
 }
 
+// eslint-disable-next-line no-unused-vars
 function returnError(err, req, res, next) {
   res.status(err.statusCode || 500).json({
     error: err.name || 'Error',

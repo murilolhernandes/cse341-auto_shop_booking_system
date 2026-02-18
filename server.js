@@ -53,6 +53,18 @@ function createApp() {
     .use('/', require('./routes/'));
 
   app.get(
+    '/github/callback',
+    passport.authenticate('github', {
+      failureRedirect: '/api-docs',
+      session: true,
+    }),
+    (req, res) => {
+      // req.session.user = req.user;
+      res.redirect('/');
+    }
+  );
+
+  app.get(
     '/google/callback',
     passport.authenticate('google', {
       failureRedirect: '/api-docs',

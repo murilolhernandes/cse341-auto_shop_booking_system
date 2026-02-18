@@ -13,6 +13,7 @@ jest.mock('connect-mongo', () => ({
 jest.mock('../utilities/authenticate', () => ({
   login: (req, res, next) => next(),
   isAuthenticated: (req, res, next) => next(),
+  loginGH: (req, res, next) => next(),
 }));
 
 const mockToArray = jest.fn();
